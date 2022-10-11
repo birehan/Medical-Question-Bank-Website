@@ -1,0 +1,60 @@
+.header {
+    background-image: url('../../assets/header-img.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+.medical-header{
+    width: 100%;
+  }
+.header-link{
+  text-decoration: none;
+  font-weight:bold;
+  color:white;
+  font-size: 16px;
+  opacity:0.8;
+}
+.selected{
+  opacity: 1;
+}
+.header-link:hover{
+  background: transparent;
+  color:white;
+  opacity:1;
+  transform: scale(1.05);
+  transition: all 400ms ease-in-out; 
+
+}
+.header-login{
+  font-weight:bold;
+  font-size: 16px;
+  margin-left: 10rem;
+  color:white;
+}
+  
+.header-buttom:hover{
+color:black;
+border: 1px solid black;
+background:black;
+}
+  
+.drawer-links{
+  text-decoration: none;
+  color:black;
+}
+.selected{
+  background-color: rgba(192, 192, 192, 0.3);
+
+}
+
+.header-btn:hover{
+  background:transparent;
+  border: 1px solid white;
+  color:white;
+  transform: scale(1.1);
+  transition: all 400ms ease-in-out; 
+
+}
+.selected-link{
+  opacity:1;
+  transition: all 400ms ease-in-out;
+}
