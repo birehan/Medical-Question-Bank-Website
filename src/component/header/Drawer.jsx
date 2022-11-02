@@ -4,7 +4,6 @@ import {
   Divider, ListItem, Box, Button, Stack
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
 
 import HelpIcon from '@mui/icons-material/Help';
 import PeopleIcon from '@mui/icons-material/People';
@@ -12,19 +11,23 @@ import InfoIcon from '@mui/icons-material/Info';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import HomeIcon from '@mui/icons-material/Home';
 
+import { auth } from "../../firebase/firebase.utils";
+import { useNavigate } from "react-router-dom";
+
 
 const pages = [
     {
       name: "Home",
      icon: HomeIcon
     },
-     {  name: "Questions",
-     icon: HelpIcon
-    },
-     {
+    {
       name: "About",
      icon: InfoIcon
     },
+     {  name: "Questions",
+     icon: HelpIcon
+    },
+   
      { 
       name: "Testimonials",
      icon: PeopleIcon},
@@ -47,8 +50,15 @@ function SvgIconsColor({Icon}){
   );
 }
 
-const DrawerComp = ({selected, setSelected}) => {
+const DrawerComp = ({selected, setSelected, currentUser,setSelectededButton, setOpen}) => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  let navigate = useNavigate();
+
+  const handleChange = () => {
+    setOpen(true);
+    setSelectededButton('login-btn');
+  }
+
 
   return (
     <React.Fragment>
@@ -60,15 +70,15 @@ const DrawerComp = ({selected, setSelected}) => {
       
 <List>
         {pages.map((item, index) => (
-          <Link onClick={() => {
+          <a href={`#${item.name}`} key={index} onClick={() => {
             setOpenDrawer(!openDrawer);
-            setSelected(item.name.toLowerCase());
+            navigate('/');               
+            setSelected(`#${item.name}`);
           }} 
-          to={`/${item.name=='Home'? '': item.name.toLowerCase()}`} 
           className= {`drawer-links`} 
           sx={{textDecoration:'none'}}>
           <ListItem
-              className= {`${selected==item.name.toLowerCase() ? 'selected': ''}`} 
+              className= {`${selected===(`#${item.name}`) ? 'selected': ''}`} 
            key={item.name} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -80,23 +90,43 @@ const DrawerComp = ({selected, setSelected}) => {
             </ListItemButton>
           </ListItem>
       <Divider />
-          </Link>
+          </a>
 
       
         ))}
+       {
+        currentUser ?
+        <Stack
+        onClick={()=>auth.signOut()}
+
+         flexDirection='row' sx={{marginTop:'10px'}} justifyContent='space-around'>
+            <Button  className=''  sx={{
+              color:"black",
+              padding:'6px 10px',
+              background:'#ffc107',
+              textTransform: 'capitalize'
+            }}
+            >Sign Out</Button>
+        </Stack>:
         <Stack flexDirection='row' sx={{marginTop:'10px'}} justifyContent='space-around'>
-        <Button className='header-buttom' sx={{
+        <Button
+        onClick={handleChange}
+         className='header-buttom' sx={{
               color:"white",
               padding:'6px 10px',
               background:'black'
             }}>Login</Button>
-            <Button  className='header-buttom'  sx={{
+            <Button  
+              onClick={()=>([setOpen(true), setSelectededButton('signup-btn')])}
+
+            className='header-buttom'  sx={{
               color:"black",
               padding:'6px 10px',
               background:'#ffc107'
             }}
             >SignUp</Button>
         </Stack>
+       }
         
       </List>
      

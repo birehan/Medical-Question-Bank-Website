@@ -5,14 +5,17 @@ import {getFirestore,
     setDoc,
     getDoc} from 'firebase/firestore';
 
+
+import { getStorage } from "firebase/storage";
+
 const config = {
-    apiKey: "AIzaSyDFKanYXun65DroF3mKms8lwSbfLoX6szc",
-    authDomain: "birehan-eco-db.firebaseapp.com",
-    projectId: "birehan-eco-db",
-    storageBucket: "birehan-eco-db.appspot.com",
-    messagingSenderId: "185955401855",
-    appId: "1:185955401855:web:0933f69cb26f46219aff4a",
-    measurementId: "G-WN8GVTX54F"
+    apiKey: "AIzaSyDUYE8DIOBfKLBs4HSERKP-2t7VN7NZbm4",
+    authDomain: "medical-school-question-db.firebaseapp.com",
+    projectId: "medical-school-question-db",
+    storageBucket: "medical-school-question-db.appspot.com",
+    messagingSenderId: "254580322144",
+    appId: "1:254580322144:web:c6c2dd25496c7f5f5fb805",
+    measurementId: "G-5QP22WB60F"
   };
 
 const app = initializeApp(config);
@@ -22,7 +25,8 @@ const provider = new GoogleAuthProvider();
 // init services
 export const db = getFirestore(app);
 
-// provider.setCustomParameters({prompt: 'select_account'}); 
+// provider
+export const storage = getStorage(app);
 
 export const signInWithGoogle = () => {
     signInWithPopup(auth, provider).then((result) => {        
@@ -59,63 +63,3 @@ export const createUserProfileDocument = async(userAuth, additionalData) => {
     return userRef;
 
 }
-
-  // const colRef = collection(db, 'users');
-    // const snapShot = await getDocs(colRef);
-
-    // const querySnapshot = await getDocs(collection(db, "users"));
-
-    // let userExist = false;
-
-    // querySnapshot.forEach((doc) =>{
-    //     if (doc.id == userAuth.uid) userExist = true
-    //     })
-
-    // if (! userExist){
-    //     const {displayName, email} = userAuth;
-    //     const createdAt = new Date();
-
-    //     try{
-    //         const docRef = await addDoc(collection(db, "users"), {
-    //             displayName,
-    //             email,
-    //             createdAt,
-    //             ...additionalData
-    //         });
-    //         console.log("document ID: " + docRef.id)
-    //     }
-    //     catch(error){
-    //         console.log("error: ", reportError)
-    //     }
-    // }
-    // else{
-    //     console.log("user already exists")
-    // }
-
-
-
-
-// provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-
-// provider.setCustomParameters({
-//     'login_hint': 'user@example.com'
-//   });
-
-// signInWithPopup(auth, provider)
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access the Google API.
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
-//     // The signed-in user info.
-//     const user = result.user;
-//     // ...
-//   }).catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // The email of the user's account used.
-//     const email = error.customData.email;
-//     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//     // ...
-//   });

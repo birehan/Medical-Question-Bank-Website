@@ -1,92 +1,44 @@
 import React, {useState} from 'react'
-import {Dialog, DialogTitle, DialogContent, DialogContentText,
+import { DialogContent,
         DialogActions, Button, IconButton, TextField, 
         FormControl, InputLabel, OutlinedInput, InputAdornment,
-        Typography, Divider
-        
-    } from '@mui/material'
+        Typography, Divider } from '@mui/material'
 
-import CloseIcon from '@mui/icons-material/Close';
-
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import GoogleIcon from '@mui/icons-material/Google';
 
-const Login = ({open, setOpen}) => {
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import { signInWithGoogle, auth } from '../firebase/firebase.utils';
 
+const Login = ({setOpen}) => {
 
-    const [selectedButton, setSelectededButton] = useState('login-btn');
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+
 
     const handleChange = (e) => {
         setPassword(e.target.value);
     }
-    // const handleMouseDownPassword = (
-    //     event: MouseEvent<HTMLButtonElement>
-    //   ) => {
-    //     event.preventDefault();
-    //   };
+    const handleSubmit =  async (event) => {
+      event.preventDefault();
+      try{
+          await signInWithEmailAndPassword(auth, email, password);
+          setEmail('');
+          setPassword('');
+          setOpen(false);
+      }
+      catch(error){
+          console.log(error);
+      }
+
+    };
+
   return (
     <div>
-        <Dialog 
-        open={open} onClose={()=> setOpen(false)}>
-            <DialogTitle>
-                <Button 
-                onClick={()=>setSelectededButton('login-btn')}
-                className='popup-buttons'
-                 sx={{
-                    background:`${selectedButton==='login-btn' ? "#ffc107":"#E6EDf5"}`,
-                    color:'black',
-                    fontSize:'1.1rem',
-                    borderRadius:'0',
-                    padding:{lg:'8px 24px', xs:'8px 16px', md:'8px 20px'},
-                    borderTopLeftRadius:'5px',
-                    borderBottomLeftRadius:'5px',
-                    width:'40%'
-
-
-                }}>Login</Button> 
-                <Button
-                onClick={()=>setSelectededButton('signup-btn')}
-
-
-                className='popup-buttons'
-                sx={{
-                    background:`${selectedButton==='signup-btn' ? "#ffc107":"#E6EDf5"}`,
-
-                    color:'black',
-                    borderRadius:'0',
-                    fontSize:'1.1rem',
-                    padding:{lg:'8px 24px', md:'8px 20px', xs:'8px 16px'},
-                   
-                    borderTopRightRadius:'5px',
-                    borderBottomRightRadius:'5px',
-                    width:'40%'
-
-
-
-                }}>SignUp</Button>              
-
-                <IconButton
-          aria-label="close"
-          onClick={()=>setOpen(false)}
-          sx={{
-
-            position: 'absolute',
-            right: 8,
-            top: 8,
-          }}
-        >
-          <CloseIcon color='white' />
-        </IconButton>
-            </DialogTitle>
-            <Divider light={false}></Divider>
             <DialogContent
             sx={{
                 
@@ -97,10 +49,16 @@ const Login = ({open, setOpen}) => {
         
 
         <Typography sx={{textAlign:'center', fontSize:'1.5rem', fontWeight:'550'}}>Login Page</Typography>  
-    <TextField sx={{width:'100%' ,marginTop:'20px'}}  id="outlined-basic" label="Email" variant="outlined" />
+    <TextField
+  autoComplete="off"   
+     value={email} 
+    onChange={(e)=> setEmail(e.target.value)}
+     sx={{width:'100%' ,marginTop:'20px'}}  id="outlined-basic" label="Email" variant="outlined" />
 
     
-    <FormControl sx={{width:'100%',  m:'20px 0'}} variant="outlined">
+    <FormControl
+    autoComplete="off"
+     sx={{width:'100%',  m:'20px 0'}} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
             Password
           </InputLabel>
@@ -114,7 +72,6 @@ const Login = ({open, setOpen}) => {
                 <IconButton
                   aria-label="toggle password visibility"
                   onClick={()=> setShowPassword(!showPassword)}
-                //   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -125,7 +82,9 @@ const Login = ({open, setOpen}) => {
           />
     </FormControl>
 
-        <Button className='login-submit' sx={{
+        <Button
+        onClick={handleSubmit}
+         className='login-submit' sx={{
 
             background:'black',
             width:'100%',
@@ -147,24 +106,23 @@ const Login = ({open, setOpen}) => {
 
             </DialogContent>
             <DialogActions>
-            <Button sx={{
-
-background:'green',
-width:'100%',
-color:'white',
-fontSize:'1rem',
-fontWeight:'bold',
-textAlign:'center',
-margin:'auto',
-display:'block',
-marginBottom:'20px'
-
-}}>
- <GoogleIcon></GoogleIcon> Login With Goolge
+            <Button
+            onClick={signInWithGoogle} 
+            className='login-submit'
+            sx = {{
+            background:'#4285f4',
+            width:'92%',
+            color:'white',
+            fontSize:'1rem',
+            fontWeight:'bold',
+            textAlign:'center',
+            margin:'auto',
+            display:'block',
+            marginBottom:'20px' }}>
+ <GoogleIcon sx={{height:'20px', paddingBottom:'5px'}}></GoogleIcon> Login With Goolge 
 </Button>
             </DialogActions>
 
-        </Dialog>
     </div>
   )
 }

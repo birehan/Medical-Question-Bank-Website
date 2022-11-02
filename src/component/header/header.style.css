@@ -1,7 +1,13 @@
 .header {
-    background-image: url('../../assets/header-img.webp');
+  background-color: #20232a;
+
+    /* background-image: url('../../assets/header-img.webp'); */
+    ;
     background-repeat: no-repeat;
     background-size: cover;
+    display:flex;
+    position: fixed;
+    top:0;
   }
 .medical-header{
     width: 100%;
@@ -12,17 +18,16 @@
   color:white;
   font-size: 16px;
   opacity:0.8;
+
 }
 .selected{
   opacity: 1;
 }
 .header-link:hover{
   background: transparent;
-  color:white;
+  color: rgb(97, 218, 251);
   opacity:1;
-  transform: scale(1.05);
-  transition: all 400ms ease-in-out; 
-
+  cursor: pointer;
 }
 .header-login{
   font-weight:bold;
@@ -54,7 +59,14 @@ background:black;
   transition: all 400ms ease-in-out; 
 
 }
+.header-btn-signout:hover{
+  border: 1px solid rgb(97, 218, 251);
+  transition: all 400ms ease-in-out; 
+
+}
 .selected-link{
   opacity:1;
   transition: all 400ms ease-in-out;
+  color:rgb(97, 218, 251) !important;
+  border-bottom: 2px solid rgb(97, 218, 251) !important;
 }
