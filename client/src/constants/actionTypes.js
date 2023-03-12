@@ -1,0 +1,32 @@
+export const CREATE_USER = "CREATE_USER";
+export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
+export const CREATE_USER_FAILED = "CREATE_USER_FAILED";
+
+export const LOGIN_USER = "LOGIN_USER";
+export const GET_LOGGED_USER = "GET_LOGGED_USER";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+
+export const LOG_OUT = "LOG_OUT";
+
+export const GET_USER = "GET_USER";
+
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
+
+export const DELETE_USER = "DELETE_USER";
+export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+export const DELETE_USER_FAILED = "DELETE_USER_FAILED";
+
+export const FETCH_ALL_USER = "FETCH_ALL_USER";
+export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
+export const FETCH_USERS_FAILED = "FETCH_USERS_FAILED";
+
+export const CLEAN_UP = "CLEAN_UP";
+
+export const GET_RECOMMENDED_JOBS = "GET_RECOMMENDED_JOBS";
+export const GET_JOBS = "GET_JOBS";
+export const SEARCH_JOBS = "SEARCH_JOBS";
+export const GET_JOB_SUCCESS = "GET_JOB_SUCCESS";
+export const GET_JOB_FAILED = "GET_JOB_FAILED";
