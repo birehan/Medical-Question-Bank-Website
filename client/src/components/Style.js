@@ -3,7 +3,8 @@ const useStyles = {
     position: "relative",
     width: {
       xs: "80vw !important",
-      md: "35vw !important",
+      md: "45vw !important",
+      lg: "35vw !important",
     },
     margin: "30px auto 0px",
     display: "flex",
@@ -12,7 +13,11 @@ const useStyles = {
   },
   searchField: {
     background: "white !important",
-    width: { xs: "80vw !important", md: "35vw !important", lg: "100%" },
+    width: {
+      xs: "80vw !important",
+      md: "45vw !important",
+      lg: "35vw !important",
+    },
     borderRadius: "10px",
     padding: "10px 50px 10px 20px",
     // border: "1px solid silver",

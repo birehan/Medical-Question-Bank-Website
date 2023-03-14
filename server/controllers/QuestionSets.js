@@ -26,6 +26,7 @@ export const getQuestionSet = async (req, res) => {
         "answer",
         "explanation",
         "questionSetId",
+        "questionCount",
       ],
     });
     res.status(200).json(response);
@@ -36,13 +37,11 @@ export const getQuestionSet = async (req, res) => {
 
 export const getCourseQuestionSets = async (req, res) => {
   try {
-    console.log("id:", req.params.courseId);
     const response = await QuestionSets.findAll({
       where: {
         courseId: req.params.courseId,
       },
     });
-    console.log(response);
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -73,14 +72,9 @@ const getQuestionsBySetId = async (questionSetId) => {
 // create a new question set
 export const createQuestionSets = async (req, res) => {
   const { error } = validateQuestionSet(req.body);
-  console.log(req.body);
   if (error) {
-    console.log("passed error");
-
     return res.status(400).send({ message: `${error.details[0].message}` });
   }
-  console.log("passed here");
-
   const { title, description, duration, courseId, questions, unitId } =
     req.body;
   try {
@@ -90,6 +84,7 @@ export const createQuestionSets = async (req, res) => {
       duration: JSON.stringify(duration),
       courseId,
       unitId,
+      questionCount: questions?.length,
     });
     questions.map(async (question) => {
       const { title, choices, answer, explanation } = question;

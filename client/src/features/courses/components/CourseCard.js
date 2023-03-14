@@ -37,19 +37,20 @@ const CourseCard = (course) => {
 
   return (
     <Card
-      onClick={() => navigate(`/course/${course?.course?.id}`)}
       className="course-card"
       sx={{
-        maxWidth: 350,
-        minWidth: 350,
-        minHeight: 300,
-        // maxHeight: 450,
+        width: { xs: "300px", md: "300px", lg: "350px" },
+        height: { xs: "400px", md: "450px" },
 
         borderRadius: "20px",
         "&:hover": {
           cursor: "pointer",
         },
         textAlign: "center",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
       }}
     >
       {openDeleteCourse && currentUser?.role === "admin" ? (
@@ -63,28 +64,29 @@ const CourseCard = (course) => {
       )}
 
       <Box
+        onClick={() => navigate(`/course/${course?.course?.id}`)}
         sx={{
-          width: "270px",
-          margin: "auto",
-          padding: "30px 30px 20px 30px !important",
+          width: "85%",
+          margin: "30px 0px 0px 0px !important",
+          height: { xs: "200px", md: "250px" },
+          border: "1px solid silver",
+          borderRadius: "20px",
+          borderRadius: "20px",
         }}
       >
-        <CardMedia
-          component="img"
-          alt="green iguana"
-          image={`/uploads/${course?.course?.image}`}
-          sx={{
-            border: "1px solid silver",
-
+        <img
+          alt={`${course?.course?.title || "course picture"}`}
+          src={`/uploads/${course?.course?.image}`}
+          width="100%"
+          // height="250px"
+          style={{
             borderRadius: "20px",
-            objectFit: "fill",
-            height: "250px",
-            width: "250px",
-            margin: "auto",
+            height: "inherit",
+            objectFit: "cover",
           }}
         />
       </Box>
-      <CardContent sx={{}}>
+      <CardContent sx={{ width: "85%", flex: "1" }}>
         <Stack
           sx={{
             flexDirection: "row",
@@ -93,12 +95,18 @@ const CourseCard = (course) => {
           }}
         >
           <Typography
+            onClick={() => navigate(`/course/${course?.course?.id}`)}
             gutterBottom
             variant="h5"
             component="div"
             sx={{
               color: "#078989",
               fontWeight: "bold",
+              "&:hover": {
+                cursor: "pointer",
+              },
+              fontSize: { xs: "20px", md: "25px" },
+              mr: "20px",
             }}
           >
             {course?.course?.title}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 
-import { Stack, Box, Card, Typography } from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 import Header from "../components/Header.js";
 import { getQuestionsByCourseId } from "../features/questionsets/actions/questions";
 import { useSelector } from "react-redux";
@@ -8,18 +8,16 @@ import { useSelector } from "react-redux";
 import Search from "../components/Search.js";
 import { useDispatch } from "react-redux";
 import { getCourses, cleanUp } from "../features/courses/actions/courses";
-import CourseCard from "../features/courses/components/CourseCard";
 import { useParams } from "react-router-dom";
-import QuestionSetCard from "../features/questionsets/components/QuestionSetCard.js";
+import QuestionsList from "../features/questionsets/components/QuestionsList.js";
+import CourseSelector from "../features/courses/components/CourseSelector.js";
+import Footer from "../components/Footer.js";
 
 const CourseDetailPage = () => {
   const { id } = useParams();
   const { questions } = useSelector((state) => state.questions);
 
-  console.log("questions: ", questions);
-
   useEffect(() => {
-    console.log("Id", id);
     if (id) {
       dispatch(getQuestionsByCourseId(id));
     }
@@ -55,13 +53,17 @@ const CourseDetailPage = () => {
   }, [success]);
 
   return (
-    <Stack>
+    <Stack
+      sx={{
+        minHeight: "100vh",
+      }}
+    >
       <Header />
       <Stack
-        className="questions-container"
+        // className="questions-container"
         sx={{
           flexDirection: { xs: "column", md: "row" },
-          gap: "30px",
+          flex: 1,
         }}
       >
         <Box
@@ -69,15 +71,17 @@ const CourseDetailPage = () => {
             flex: 1,
             backgroundColor: "#f6f9fa !important",
             borderColor: "#f6f9fa !important",
+            overflow: "auto",
           }}
         >
           <Stack
             className="questions-content"
             sx={{
-              margin: "50px",
+              margin: "10px 50px 50px",
               overflow: "auto",
               padding: "20px 20px 20px",
               gap: "20px",
+              flex: 1,
             }}
           >
             <Search handleSearch={handleSearch} />
@@ -88,58 +92,43 @@ const CourseDetailPage = () => {
                 fontSize: "2em",
               }}
             >
-              Courses
+              Quizzes
             </Typography>
-            {questions ? (
-              <Stack
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  gap: "40px",
-                }}
-              >
-                {questions.map((questionSet, index) => {
-                  return (
-                    <QuestionSetCard questionSet={questionSet} key={index} />
-                  );
-                })}
-              </Stack>
-            ) : (
-              ""
-            )}
+            {questions ? <QuestionsList questions={questions} /> : ""}
           </Stack>
         </Box>
 
         <Box
           sx={{
-            width: { md: "400px", lg: "500px" },
+            width: { md: "400px", lg: "450px" },
             position: "relative",
+            margin: "30px 20px",
           }}
         >
           <Stack
             sx={{
               position: "fixed",
-              top: "100px",
-              right: "0px",
-              width: { md: "400px", lg: "500px" },
+              top: "130px",
+              right: "20px",
+              width: { md: "360px", lg: "410px" },
             }}
           >
-            <Box
+            <Stack
               sx={{
                 height: "500px",
-                // border: "4px solid green",
-                margin: "30px",
-                padding: "20px",
+                gap: "30px",
+                width: "100%",
               }}
             >
               <Typography sx={{ fontSize: "2rem" }}>Filters</Typography>
-              
+              <CourseSelector />
+
               <Stack></Stack>
-            </Box>
+            </Stack>
           </Stack>
         </Box>
       </Stack>
+      <Footer />
     </Stack>
   );
 };

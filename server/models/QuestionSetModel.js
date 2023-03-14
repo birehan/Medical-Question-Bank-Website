@@ -49,6 +49,11 @@ export const QuestionSets = db.define(
       allowNull: false,
       defaultValue: 0,
     },
+    questionCount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
   },
   {
     freezeTableName: true,

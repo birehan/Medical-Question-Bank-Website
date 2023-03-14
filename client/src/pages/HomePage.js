@@ -8,13 +8,17 @@ import { useDispatch } from "react-redux";
 import { getCourses, cleanUp } from "../features/courses/actions/courses";
 import CourseCard from "../features/courses/components/CourseCard";
 import UnitSection from "../features/units/components/UnitContent";
+import CourseList from "../features/courses/components/CourseList";
+import Loading from "../components/Loading.js";
+import Footer from "../components/Footer";
+import BottomCurve from "../assets/home_bottom_curve.png";
 
 const HomePage = () => {
   const { courses, success } = useSelector((state) => state.courses);
 
   const [search, setSearch] = useState("");
 
-  const filteredJobs = useMemo(() =>
+  let filteredJobs = useMemo(() =>
     courses?.filter(
       (course) =>
         course["title"]?.toLowerCase()?.startsWith(search?.toLowerCase()),
@@ -23,12 +27,13 @@ const HomePage = () => {
   );
 
   const handleSearch = (text) => {
+    console.log(courses);
     setSearch(text);
   };
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!courses) {
+    if (courses) {
       dispatch(getCourses());
     }
   }, []);
@@ -54,14 +59,37 @@ const HomePage = () => {
     }
   }
 
+  if (!filteredJobs || !courses) {
+    return <Loading />;
+  }
+
   return (
     <Box
       className="home-container"
       sx={{
         backgroundColor: "#f6f9fa !important",
-        height: "100vh",
+        minHeight: "100vh",
+        position: "relative",
       }}
     >
+      {/* <Box
+        sx={{
+          position: "absolute",
+          display: {
+            xs: "none",
+            md: "flex",
+            top: "0",
+            left: "600px",
+            right: "0",
+            margin: "0 auto",
+            height: { xs: "200px", md: "200px", lg: "100px !important" },
+            width: "450px",
+          },
+        }}
+        component="img"
+        alt="curve"
+        src={TopCurvePic}
+      ></Box> */}
       <Header />
 
       <Box
@@ -91,47 +119,27 @@ const HomePage = () => {
             Courses
           </Typography> */}
           <Search handleSearch={handleSearch} />
-
-          <Stack>
-            {filteredJobs && filteredJobs.length ? (
-              <Stack
-                className="course-container"
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  gap: "60px",
-                  padding: "60px",
-                  justifyContent: { xs: "center", lg: "start" },
-                  // border: "5px solid green",
-                }}
-              >
-                {filteredJobs.map((course, index) => {
-                  return <CourseCard course={course} key={index} />;
-                })}
-              </Stack>
-            ) : (
-              <Stack
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  gap: "60px",
-                  padding: "30px",
-                  justifyContent: { xs: "center", lg: "center" },
-                  // border: "5px solid green",
-                  background: "white",
-                  borderRadius: "10px",
-                  mt: "30px",
-                }}
-              >
-                {" "}
-                <Typography>No Course Found!</Typography>
-              </Stack>
-            )}
-          </Stack>
+          <CourseList filteredJobs={filteredJobs} />
         </Stack>
       </Box>
+      <Box
+        sx={{
+          position: "absolute",
+          display: {
+            // xs: "none",
+            md: "flex",
+            bottom: "00px",
+            left: "0px",
+            right: "0",
+            margin: "50px auto 0px",
+            height: "80px",
+          },
+        }}
+        component="img"
+        alt="curve"
+        src={BottomCurve}
+      ></Box>
+      <Footer />
     </Box>
   );
 };
