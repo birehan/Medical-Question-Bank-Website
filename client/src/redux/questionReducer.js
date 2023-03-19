@@ -32,25 +32,6 @@ const questionReducer = (state = initialState, action) => {
       };
 
     // get courses
-    case types.GET_QUESTIONS_BY_ID:
-      return {
-        ...state,
-        loading: true,
-      };
-    case types.GET_QUESTIONS_BY_ID_SUCCESS:
-      return {
-        ...state,
-        question: action.payload,
-        loading: false,
-        success: true,
-      };
-    case types.GET_QUESTIONS_BY_ID_FAILED:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        message: action.payload,
-      };
 
     // get course by id
     case types.GET_QUESTIONS_BY_COURSE_ID:

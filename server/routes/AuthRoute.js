@@ -1,5 +1,12 @@
 import express from "express";
-import { Login, logOut, Me } from "../controllers/Auth.js";
+import {
+  Login,
+  logOut,
+  Me,
+  forgetPassword,
+  resetPassword,
+  resetPasswordPost,
+} from "../controllers/Auth.js";
 const router = express.Router();
 import passport from "passport";
 import config from "config";
@@ -7,6 +14,9 @@ const { CLIENT_URL } = config.get("google");
 router.get("/me", Me);
 
 router.post("/login", Login);
+router.post("/forgetpassword", forgetPassword);
+router.get("/reset-password/:token", resetPassword);
+router.post("/reset-password/:token", resetPasswordPost);
 
 router.delete("/logout", logOut);
 

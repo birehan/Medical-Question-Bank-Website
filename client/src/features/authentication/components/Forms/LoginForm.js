@@ -118,6 +118,19 @@ const LoginForm = () => {
         </FormControl>
 
         {/* password field ned*/}
+        <Box
+          onClick={() => navigate("/forget-password")}
+          sx={{
+            margin: "20px",
+            textAlign: "center",
+            color: "#00b5be",
+            "&:hover": {
+              cursor: "pointer",
+            },
+          }}
+        >
+          <Typography sx={{ fontWeight: "bold" }}>Forget Password?</Typography>
+        </Box>
 
         <Button sx={useStyles.submitButtonStyle} type="submit">
           Login

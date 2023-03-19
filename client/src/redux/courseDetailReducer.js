@@ -1,5 +1,10 @@
 import * as types from "../constants/unitActionTypes.js";
 import {
+  GET_QUESTIONS_BY_ID,
+  GET_QUESTIONS_BY_ID_SUCCESS,
+  GET_QUESTIONS_BY_ID_FAILED,
+} from "../constants/questionsActionTypes.js";
+import {
   GET_COURSE_BY_ID,
   GET_COURSE_BY_ID_SUCCESS,
   GET_COURSE_BY_ID_FAILED,
@@ -17,6 +22,26 @@ const initialState = {
 
 const courseDetailReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_QUESTIONS_BY_ID:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_QUESTIONS_BY_ID_SUCCESS:
+      return {
+        ...state,
+        questionSets: action.payload,
+        loading: false,
+        success: true,
+      };
+    case GET_QUESTIONS_BY_ID_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        message: action.payload,
+      };
+
     // get course by id
     case GET_COURSE_BY_ID:
       return {

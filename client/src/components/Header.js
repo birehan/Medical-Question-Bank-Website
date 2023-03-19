@@ -31,7 +31,7 @@ const useStyles = styled({
   },
 });
 
-const Header = ({}) => {
+const Header = () => {
   const { pathname } = useLocation();
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -42,6 +42,7 @@ const Header = ({}) => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.users);
   const [selected, setSelected] = useState("");
+  console.log("path: ", pathname);
 
   window.onscroll = function () {
     myFunction();
@@ -59,21 +60,13 @@ const Header = ({}) => {
   }
 
   return (
-    <Box
-      id="myHeader"
-      className="header"
-      sx={{
-        height: "100px",
-        width: "100vw",
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "space-between !important",
-        zIndex: "10",
-      }}
-    >
+    <Box id="myHeader" className="header" sx={{}}>
       <DrawerComponent openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
 
       <Box
+        onClick={() => {
+          navigate("/");
+        }}
         component="img"
         alt="logo"
         src={Logo}
@@ -81,6 +74,9 @@ const Header = ({}) => {
           width: "70px",
           height: "70px",
           ml: { xs: "20px", md: "50px" },
+          "&:hover": {
+            cursor: "pointer",
+          },
         }}
       ></Box>
 
@@ -99,6 +95,7 @@ const Header = ({}) => {
             alignItems: "center",
             margin: "auto 70px auto 0px",
             gap: "50px",
+            // border: "1px solid green",
           }}
         >
           <Box

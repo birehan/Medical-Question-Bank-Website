@@ -13,6 +13,30 @@ function* createUser({ payload }) {
     });
   }
 }
+
+function* forgetPassword({ payload }) {
+  try {
+    const unit = yield call(api.forgetPassword, payload);
+    yield put({ type: types.FORGET_PASSWORD_SUCCESS, payload: unit });
+  } catch (error) {
+    yield put({
+      type: types.FORGET_PASSWORD_FAILED,
+      payload: error,
+    });
+  }
+}
+
+function* resetPassword({ payload }) {
+  try {
+    const unit = yield call(api.resetPassword, payload);
+    yield put({ type: types.RESET_PASSWORD_SUCCESS, payload: unit });
+  } catch (error) {
+    yield put({
+      type: types.RESET_PASSWORD_FAILED,
+      payload: error,
+    });
+  }
+}
 function* loginUser({ payload }) {
   try {
     const user = yield call(api.login, payload);
@@ -69,6 +93,9 @@ function* deleteUser({ payload }) {
 
 function* userSaga() {
   yield takeEvery(types.LOGIN_USER, loginUser);
+  yield takeEvery(types.FORGET_PASSWORD, forgetPassword);
+  yield takeEvery(types.RESET_PASSWORD, resetPassword);
+
   yield takeEvery(types.GET_LOGGED_USER, getLoggedUser);
 
   yield takeEvery(types.CREATE_USER, createUser);

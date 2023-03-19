@@ -1,6 +1,20 @@
 import { Users } from "../models/UserModel.js";
 import argon2 from "argon2";
-import passport from "../passport.js";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
+
+import Sequelize from "sequelize";
+const op = Sequelize.Op;
+
+const transporter = nodemailer.createTransport({
+  host: "medquizet.com",
+  port: 465, // Replace with the SMTP port for your email provider
+  secure: true,
+  auth: {
+    user: "tsegawmolla@medquizet.com",
+    pass: "Medquizet4549abc",
+  },
+});
 
 export const Login = async (req, res) => {
   const { email, password } = req.body;
@@ -63,4 +77,182 @@ export const setPassword = async (req, res) => {
     // res.redirect("/auth/set-password");
   }
   // res.render("set-password", { user: req.user });
+};
+
+// Route to handle forgot password submission
+export const forgetPassword = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const user = await Users.findOne({ where: { email: email } });
+
+    if (!user) return res.status(404).json({ message: "User not found!" });
+
+    // Generate reset token and expiration time
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetExpires = Date.now() + 3600000; // 1 hour from now
+
+    // Save reset token and expiration time in user record
+    await user.update({
+      resetToken: resetToken,
+      resetExpires: resetExpires,
+    });
+
+    const resetUrl = `http://${req.headers.host}/reset-password/${resetToken}`;
+
+    const html = `<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <title>Password Reset</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            background-color: rgb(231, 231, 231) !important;
+            color:black !important;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f6f9fa !important;
+            padding: 20px;
+            border-radius: 20px;
+          }
+          .header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+          }
+          .header h1 {
+            margin: 0;
+          }
+          .content {
+            padding: 20px;
+            background-color: #f8f8f8;
+          }
+          .button {
+            display: inline-block;
+            background-color: #039198;
+            color: #fff !important;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+          }
+          h1 {
+            color: #039198;
+          }
+          p{
+            color:black !important;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="">
+            <h1>Medical Question bank</h1>
+    
+            <h2>Password Reset</h2>
+          </div>
+          <div class="">
+            <p>Hi ${user?.name},</p>
+            <p>
+              You have requested to reset your password. Please click the button
+              below to reset your password:
+            </p>
+            <p>This request expires in 1 hour.</p>
+            <a class="button" href=${resetUrl}>Reset Password</a>
+            <p>
+              If you did not request this password reset, please ignore this email.
+            </p>
+            <p>Best regards,</p>
+            <p>The Medical Question Bank Team</p>
+          </div>
+        </div>
+      </body>
+    </html>
+    `;
+    const mailOptions = {
+      to: email,
+      from: "'Medical Question Bank' <tsegawmolla@medquizet.com>",
+      subject: "Password reset request",
+      auth: {
+        user: "tsegawmolla@medquizet.com",
+        pass: "Medquizet4549abc",
+      },
+      html: html,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.send({ message: "success" });
+  } catch (error) {
+    res.status(404).send({
+      message:
+        "An error occurred while processing your request. Please try again.",
+    });
+  }
+};
+
+// Route to handle reset password page
+
+export const resetPassword = async (req, res) => {
+  console.log("hello world");
+  try {
+    const token = req.params.token;
+    const user = await Users.findOne({
+      where: { resetToken: token, resetExpires: { [op.gt]: Date.now() } },
+    });
+
+    if (!user) {
+      // Token is invalid or has expired
+      return res.status(404).send({
+        message: "Password reset token is invalid or has expired.",
+      });
+    }
+
+    res.redirect(`http://localhost:3000/reset-password/${token}`);
+  } catch (error) {
+    console.error("error: ", error);
+    res.send({
+      message:
+        "An error occurred while processing your request. Please try again.",
+    });
+  }
+};
+
+// Route to handle reset password submission
+export const resetPasswordPost = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const password = req.body.password;
+
+    const user = await Users.findOne({
+      where: { resetToken: token, resetExpires: { [op.gt]: Date.now() } },
+    });
+
+    if (!user) {
+      // Token is invalid or has expired
+      return res.status(404).send({
+        message: "Password reset token is invalid or has expired.",
+      });
+    }
+
+    // Update user's password and remove reset token and expiration time
+    const hashPassword = await argon2.hash(password);
+
+    await user.update({
+      password: hashPassword,
+      resetToken: null,
+      resetExpires: null,
+    });
+
+    res.send({
+      message:
+        "Password reset successfully. Please login with your new password.",
+    });
+  } catch (error) {
+    res.status(404).send("reset-password error!");
+  }
 };

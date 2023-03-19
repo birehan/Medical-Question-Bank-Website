@@ -19,8 +19,10 @@
   --header-main: #29d4dd;
 
   --trial: #cfffdc !important;
+  --man: rgb(200, 196, 196);
 
   scroll-behavior: smooth !important;
+  transition: "400ms all ease-in";
 }
 
 body {
@@ -45,10 +47,13 @@ body {
   background: white !important;
   border: none !important;
 }
-
-::-webkit-scrollbar {
-  width: 0px;
+.unit-content::-webkit-scrollbar {
+  width: 5px !important;
 }
+
+/* ::-webkit-scrollbar {
+  width: 0px;
+} */
 
 /* .questions-container::-webkit-scrollbar {
   width: 5px !important;
@@ -90,17 +95,28 @@ body {
     rgba(255, 255, 255, 0.24) 0%,
     rgba(255, 255, 255, 0.06) 100%
   );
-  box-shadow: 0px 0px 50px -25px rgba(0, 0, 0, 0.5);
-  /* backdrop-filter: blur(50px); */
-  /* Note: backdrop-filter has minimal browser support */
+  /* box-shadow: 0px 0px 50px -25px rgba(0, 0, 0, 0.5); */
+
+  box-shadow: 0px 0px 40px -25px rgba(0, 0, 0, 0.5);
 
   border-radius: 10px;
-  min-height: 100px;
   z-index: 10 !important;
   height: 100px !important;
   display: flex;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: space-between !important;
+
+  height: "100px";
+  /* width: "100vw"; */
+  display: "flex";
+
+  /* padding: 10px 16px; */
+  background: white;
+  color: #f1f1f1;
+  width: 100%;
+
+  position: fixed;
+  top: 0px;
 }
 .medical-title {
   font-family: "Poppins";
@@ -126,21 +142,12 @@ body {
   text-align: center;
 }
 
-.header {
-  /* padding: 10px 16px; */
-  background: white;
-  color: #f1f1f1;
-}
-
 .content {
   padding: 16px;
   background: white;
 }
 
 .sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
 }
 
 .sticky + .content {
@@ -233,7 +240,7 @@ figcaption {
 
 /* Footer css */
 .footer {
-  background: #00b5be;
+  background: #00b5be !important;
   padding: 30px 0px;
   font-family: "Play", sans-serif;
   text-align: center;
@@ -294,4 +301,241 @@ figcaption {
   .footer .row a i {
     margin: 0% 3%;
   }
+}
+
+.filter-container {
+  max-height: calc(100vh - 350px);
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e5f78;
+  border-radius: 10px;
+}
+
+/* taken from old */
+
+.question-choice {
+  font-size: "18px";
+  /* width: 100%; */
+  transition: all 400ms ease-in-out;
+  font-family: sans-serif;
+}
+
+/* .question-choice:hover {
+  border-collapse: collapse;
+  background-color: #f2f2f2;
+  cursor: pointer;
+  color: black;
+} */
+
+.wrong-choice {
+  border-collapse: collapse;
+  background-color: red;
+}
+.wrong-choice:hover {
+  border-collapse: collapse;
+  background-color: red;
+}
+
+.correct-choice {
+  color: black !important;
+  font-weight: 700;
+  border-collapse: collapse;
+  background-color: #29ad50;
+  transition: all 400ms ease-in-out;
+}
+.correct-choice:hover {
+  color: black !important;
+  font-weight: 700;
+  border-collapse: collapse;
+  background-color: #29ad50;
+  transition: all 400ms ease-in-out;
+}
+.css-ahj2mt-MuiTypography-root {
+  font-family: sans-serif !important;
+}
+
+#Questions,
+#Testimonials {
+  scroll-margin-top: 100px;
+}
+
+#Contact {
+  scroll-margin-top: 100px;
+}
+
+/* Questions header link drop down css */
+
+.dropdown-content {
+  margin-top: 7px;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown-content .dropdown-link {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  /* padding: 14px 16px; */
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown-content .dropdown-link:hover {
+  background-color: #ddd;
+  color: black;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Question horizontal swiper css */
+.swiper-slide {
+  min-width: 250px;
+  max-width: 300px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: transparent;
+  color: rgb(0, 0, 0) !important;
+  fill: rgb(0, 0, 0) !important;
+  stroke: rgb(0, 0, 0) !important;
+}
+
+/* Question horizontal swiper css */
+.testimonials-card {
+  transition: all 400ms ease-in-out;
+}
+.testimonials-card:hover {
+  border: 1px solid black;
+  box-shadow: inset 100px 100px 100px 100px #e7ebf0;
+  /* background-color:rgba(97, 218, 251, 1); */
+}
+/* Contact form css */
+.input-username {
+  border: none;
+  border-radius: 40px;
+  background-color: white;
+}
+.contact-message {
+  background: white;
+  border: none;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Footer css */
+.footer {
+  background: #20232a;
+  padding: 30px 0px;
+  font-family: "Play", sans-serif;
+  text-align: center;
+  position: sticky;
+  left: 0px;
+  width: 100%;
+  bottom: 0;
+}
+
+.footer .row {
+  width: 100%;
+  margin: 10px 0;
+  padding: 5px 0;
+  color: gray;
+  font-size: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.footer .row a {
+  text-decoration: none;
+  color: white;
+  transition: 0.5s;
+  width: auto;
+}
+
+.footer .row a:hover {
+  color: rgb(97, 218, 251);
+}
+
+.footer .row ul {
+  width: 100%;
+}
+
+.footer .row ul li {
+  display: inline-block;
+  margin: 0px 30px;
+}
+
+.footer .row a i {
+  font-size: 2em;
+  margin: 0% 1%;
+}
+
+@media (max-width: 720px) {
+  .footer {
+    text-align: left;
+    padding: 5%;
+  }
+  .footer .row ul li {
+    display: block;
+    margin: 10px 0px;
+    text-align: left;
+  }
+  .footer .row a i {
+    margin: 0% 3%;
+  }
+}
+
+/* Unit Drop Card Css */
+.unit-drop-card {
+  min-height: 50px !important;
+}
+
+.questions-container {
+  background: yellow;
+  overflow: auto;
+  /* max-height: 1000px; */
+  /* calc(100vh-400px); */
+}
+.question-container-card {
+  /* min-height: 500px; */
+  overflow: auto;
+  max-height: max-content;
+}
+.units-container {
+}
+
+.course-page {
+  background: #e7ebf0;
+  /* min-height: calc(100vh - 400px) !important; */
+}
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  max-width: 1000px !important;
+}
+
+.quiz-container {
+  min-height: calc(100vh - 600px) !important;
 }

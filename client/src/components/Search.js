@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useStyles from "./Style";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Search = ({ handleSearch }) => {
+const Search = ({ handleSearch, helperText }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const Search = ({ handleSearch }) => {
         disableUnderline={true}
         type={"search"}
         sx={useStyles.searchField}
-        placeholder="Search a course"
+        placeholder={helperText}
         name="search"
         variant="outlined"
         id="outlined-basic search"

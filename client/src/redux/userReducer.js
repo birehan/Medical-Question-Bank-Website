@@ -103,6 +103,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+
     case types.UPDATE_USER_SUCCESS:
       return {
         ...state,
@@ -138,6 +139,46 @@ const userReducer = (state = initialState, action) => {
         success: false,
         failed: true,
         // message: action.payload,
+      };
+
+    case types.FORGET_PASSWORD:
+      return {
+        ...state,
+      };
+    case types.FORGET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        failed: false,
+        message: "",
+      };
+
+    // Update employee conditions
+    case types.FORGET_PASSWORD_FAILED:
+      return {
+        ...state,
+        failed: true,
+        message: action.payload,
+      };
+
+    case types.RESET_PASSWORD:
+      return {
+        ...state,
+      };
+    case types.RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        failed: false,
+        message: "",
+      };
+
+    // Update employee conditions
+    case types.RESET_PASSWORD_FAILED:
+      return {
+        ...state,
+        failed: true,
+        message: action.payload,
       };
 
     default:

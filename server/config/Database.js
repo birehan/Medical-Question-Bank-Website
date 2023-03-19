@@ -21,6 +21,7 @@ db.beforeConnect(async () => {
     port: port,
     user: user,
     password: password,
+    connectionLimit: 10,
   });
   await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 });

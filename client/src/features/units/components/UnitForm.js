@@ -9,11 +9,9 @@ import {
 } from "@mui/material";
 
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import useStyles from "../../authentication/components/Forms/Style.js";
-import { useNavigate } from "react-router-dom";
-import { cleanUp, createUnit, updateUnit } from "../actions/units.js";
+import {  createUnit, updateUnit } from "../actions/units.js";
 import HelperText from "../../../components/HelperText.js";
 
 const UnitForm = ({
@@ -25,6 +23,7 @@ const UnitForm = ({
   setSelectedUnit,
 }) => {
   const dispatch = useDispatch();
+  
   const {
     register,
     handleSubmit,

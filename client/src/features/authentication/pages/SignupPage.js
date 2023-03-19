@@ -1,23 +1,12 @@
 import React, { useEffect } from "react";
-import {
-  Stack,
-  Box,
-  Card,
-  Avatar,
-  Typography,
-  Button,
-  Divider,
-} from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 import SignupForm from "../components/Forms/SignupForm.js";
-import Header from "../../../components/Header.js";
-
 import { useNavigate } from "react-router-dom";
-import useStyles from "../components/Forms/Style.js";
-import Stethoscope from "../assets/stethoscope.png";
 import { useSelector } from "react-redux";
 import { cleanUp } from "../actions/users.js";
 import { useDispatch } from "react-redux";
 import SignupPic from "../../../assets/signup.png";
+import Logo from "../../../assets/logo.png";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -36,8 +25,27 @@ const SignupPage = () => {
       sx={{
         flexDirection: { xs: "column", md: "row" },
         height: "100vh",
+        position: "relative",
       }}
     >
+      <Box
+        onClick={() => {
+          navigate("/");
+        }}
+        component="img"
+        alt="logo"
+        src={Logo}
+        sx={{
+          width: "70px",
+          height: "70px",
+          "&:hover": {
+            cursor: "pointer",
+          },
+          position: "absolute",
+          right: "50px",
+          top: "30px",
+        }}
+      ></Box>
       <Box
         sx={{
           flex: "45",
@@ -72,17 +80,18 @@ const SignupPage = () => {
           }}
         >
           <Typography
-            variant="h2"
             sx={{
               fontFamily: "Montserrat",
               fontWeight: 600,
               lineHeight: "59px",
               color: "#000000",
               textAlign: "center",
+              fontSize: { xs: "42px", md: "42px", lg: "48px" },
             }}
           >
             Sign Up
           </Typography>
+
           <SignupForm />
         </Stack>
       </Stack>

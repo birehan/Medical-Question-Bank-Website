@@ -8,6 +8,8 @@ import {
   GET_USER,
   LOG_OUT,
   GET_LOGGED_USER,
+  FORGET_PASSWORD,
+  RESET_PASSWORD,
 } from "../../../constants/actionTypes.js";
 
 export const getUsers = () => {
@@ -42,4 +44,12 @@ export const updateUser = (user, id) => {
 
 export const deleteUser = (id) => {
   return { type: DELETE_USER, payload: id };
+};
+
+export const forgetPassword = (data) => {
+  return { type: FORGET_PASSWORD, payload: data };
+};
+
+export const resetPassword = (data) => {
+  return { type: RESET_PASSWORD, payload: data };
 };

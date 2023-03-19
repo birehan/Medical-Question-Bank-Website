@@ -7,6 +7,7 @@ import { cleanUp } from "../actions/users.js";
 import { useDispatch } from "react-redux";
 import LoginPic from "../../../assets/login.png";
 import LoginForm from "../components/Forms/LoginForm.js";
+import Logo from "../../../assets/logo.png";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -25,8 +26,28 @@ const LoginPage = () => {
       sx={{
         flexDirection: { xs: "column", md: "row" },
         height: "100vh",
+        position: "relative",
       }}
     >
+      <Box
+        onClick={() => {
+          navigate("/");
+        }}
+        component="img"
+        alt="logo"
+        src={Logo}
+        sx={{
+          width: "70px",
+          height: "70px",
+          // ml: { xs: "20px", md: "50px" },
+          "&:hover": {
+            cursor: "pointer",
+          },
+          position: "absolute",
+          right: "30px",
+          top: "30px",
+        }}
+      ></Box>
       <Box
         sx={{
           flex: "45",
@@ -60,13 +81,13 @@ const LoginPage = () => {
           }}
         >
           <Typography
-            variant="h2"
             sx={{
               fontFamily: "Montserrat",
               fontWeight: 600,
               lineHeight: "59px",
               color: "#000000",
               textAlign: "center",
+              fontSize: { xs: "42px", md: "42px", lg: "48px" },
             }}
           >
             Login

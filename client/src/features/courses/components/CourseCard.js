@@ -18,7 +18,6 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-import { textAlign } from "@mui/system";
 
 const CourseCard = (course) => {
   const { currentUser } = useSelector((state) => state.users);

@@ -61,6 +61,7 @@ const QuestionsPage = () => {
             flexDirection: { xs: "column", md: "row" },
             gap: "10px",
             background: "#f6f9fa",
+            mt: "100px",
           }}
         >
           <Box sx={{ flex: 1, flexWrap: "wrap" }}>

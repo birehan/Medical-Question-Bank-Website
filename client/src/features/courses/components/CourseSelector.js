@@ -25,7 +25,7 @@ const CourseSelector = () => {
 
   return (
     <Stack sx={{ gap: "20px", width: "100%" }}>
-      <HelperText text={"course"} />
+      <HelperText text={"Filter By Course"} />
       <Autocomplete
         value={value}
         onChange={(event, newValue) => {
@@ -38,7 +38,7 @@ const CourseSelector = () => {
         getOptionLabel={(option) => option.title || ""}
         disablePortal
         id="combo-box-demo"
-        sx={{ width: "90%" }}
+        sx={{ width: "100%" }}
         options={courses}
         renderOption={(props, option) => (
           <Box

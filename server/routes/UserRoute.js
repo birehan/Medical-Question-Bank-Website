@@ -1,21 +1,19 @@
 import express from "express";
 import {
-  getUnits,
-  getUnitById,
-  createUnit,
-  updateUnit,
-  deleteUnit,
-} from "../controllers/Units.js";
-
+  getUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+} from "../controllers/Users.js";
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
 
 const router = express.Router();
 
-router.get("/units/:courseId", getUnits);
-router.post("/units", verifyUser, adminOnly, createUnit);
-
-router.get("/unit/:id", getUnitById);
-router.put("/unit/:id", verifyUser, adminOnly, updateUnit);
-router.delete("/unit/:id", verifyUser, adminOnly, deleteUnit);
+router.get("/users", verifyUser, adminOnly, getUsers);
+router.get("/users/:id", verifyUser, adminOnly, getUserById);
+router.post("/users", createUser);
+router.patch("/users/:id", verifyUser, adminOnly, updateUser);
+router.delete("/users/:id", verifyUser, adminOnly, deleteUser);
 
 export default router;

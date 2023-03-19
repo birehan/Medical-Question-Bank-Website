@@ -3,16 +3,31 @@ import { Box, Stack, Button, Typography } from "@mui/material";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import useStyles from "./Style.js";
-import HomePic from "../assets/home.png";
+import HomeVector from "../assets/home1.jpg";
 import GetStartedDot from "../assets/get_start_dot.png";
 import BottomCurve from "../assets/home_bottom_curve.png";
+
+const services = [
+  {
+    title: "2000+",
+    description: "Questions from all the major courses in medical school.",
+  },
+  {
+    title: "10+",
+    description: "Ethiopian medical school university questions included.",
+  },
+  {
+    title: "100+",
+    description: "Questions uploaded weekly.",
+  },
+];
 
 const LandingPage = () => {
   const classes = useStyles().__emotion_base;
   const navigate = useNavigate();
 
   return (
-    <Stack title="Settings" sx={classes?.homepage}>
+    <Stack sx={classes?.homepage}>
       <Header />
       <Stack className={classes?.root} sx={classes?.homeContent}>
         <Stack sx={classes?.homeTextContainer}>
@@ -49,17 +64,102 @@ const LandingPage = () => {
             <Box
               sx={classes?.homeImage}
               component="img"
-              src={HomePic}
+              src={HomeVector}
               alt="home pic"
             ></Box>
           </Box>
         </Box>
+
         <Box
           sx={classes.bottomCurve}
           component="img"
           alt="curve"
           src={BottomCurve}
         ></Box>
+      </Stack>
+      <Box sx={{ textAlign: "center", margin: "20px" }}>
+        <Typography
+          sx={{
+            fontFamily: "Poppins",
+            fontStyle: "normal",
+            fontWeight: "bold",
+            fontSize: { xs: "32px", md: "34px", lg: "38px" },
+
+            color: "black",
+          }}
+        >
+          Our Site Provides
+        </Typography>
+      </Box>
+      <Stack
+        sx={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: { xs: "20px", md: "40px", lg: "60px" },
+          margin: "20px auto 100px",
+          flexWrap: "wrap",
+        }}
+      >
+        {services.map((service, index) => {
+          return (
+            <Stack
+              key={index}
+              sx={{
+                gap: "20px",
+                height: "200px",
+                width: "250px",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                // border: "1px solid #00b5be",
+                padding: "30px",
+                borderRadius: "10px",
+                color: "#00b5be",
+                background: "white",
+
+                "&:hover": {
+                  cursor: "pointer",
+                  background: "#29d4dd",
+                  color: "black !important",
+                },
+                boxShadow: "0px 0px 40px -25px rgba(0, 0, 0, 0.5)",
+                transition: "400ms all ease-in",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "Poppins",
+                  fontStyle: "normal",
+                  fontWeight: "700",
+                  fontSize: { xs: "24px", md: "26px", lg: "28px" },
+                  lineHeight: "160.9%",
+                  letterSpacing: "0.01em",
+                  height: "50px",
+                }}
+              >
+                {service.title}
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: "Poppins",
+                  fontStyle: "normal",
+                  fontWeight: "400",
+                  fontSize: "20px",
+                  lineHeight: "169.4%",
+                  /* or 77px */
+
+                  letterSpacing: "0.07em",
+
+                  color: "black",
+                  flex: "1",
+                }}
+              >
+                {service.description}
+              </Typography>
+            </Stack>
+          );
+        })}
       </Stack>
     </Stack>
   );

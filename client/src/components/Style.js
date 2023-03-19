@@ -2,8 +2,8 @@ const useStyles = {
   searchContainer: {
     position: "relative",
     width: {
-      xs: "80vw !important",
-      md: "45vw !important",
+      xs: "100% !important",
+      md: "50vw !important",
       lg: "35vw !important",
     },
     margin: "30px auto 0px",
@@ -14,8 +14,9 @@ const useStyles = {
   searchField: {
     background: "white !important",
     width: {
-      xs: "80vw !important",
-      md: "45vw !important",
+      xs: "100% !important",
+
+      md: "50vw !important",
       lg: "35vw !important",
     },
     borderRadius: "10px",

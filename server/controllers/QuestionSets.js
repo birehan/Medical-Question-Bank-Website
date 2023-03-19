@@ -26,7 +26,6 @@ export const getQuestionSet = async (req, res) => {
         "answer",
         "explanation",
         "questionSetId",
-        "questionCount",
       ],
     });
     res.status(200).json(response);

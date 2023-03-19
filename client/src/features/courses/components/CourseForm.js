@@ -37,10 +37,6 @@ const CourseForm = ({ course }) => {
   });
 
   const onSubmit = (data) => {
-    // if (!image) {
-    //   alert("Please add the course image!");
-    //   return;
-    // }
     const formData = new FormData();
     formData.append("id", course?.id);
     formData.append("title", data.title);

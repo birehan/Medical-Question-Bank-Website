@@ -19,7 +19,7 @@ export const getCourses = async () => {
     const { data } = await axios.get(url + "/courses");
     return data;
   } catch (error) {
-    return error;
+    throw error?.message;
   }
 };
 

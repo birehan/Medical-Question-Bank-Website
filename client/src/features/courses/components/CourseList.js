@@ -35,7 +35,7 @@ const CourseList = ({ filteredJobs }) => {
               flexWrap: "wrap",
               gap: { xs: "20px", md: "50px" },
               padding: { xs: "20px", md: "50px" },
-              justifyContent: { xs: "center", lg: "start" },
+              justifyContent: { xs: "center", lg: "center" },
               // border: "5px solid green",
             }}
           >

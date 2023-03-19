@@ -17,7 +17,12 @@ const HomePage = () => {
   const { courses, success } = useSelector((state) => state.courses);
 
   const [search, setSearch] = useState("");
+  console.log("course: ", courses);
 
+  const handleSearch = (text) => {
+    console.log(courses);
+    setSearch(text);
+  };
   let filteredJobs = useMemo(() =>
     courses?.filter(
       (course) =>
@@ -26,14 +31,9 @@ const HomePage = () => {
     )
   );
 
-  const handleSearch = (text) => {
-    console.log(courses);
-    setSearch(text);
-  };
-
   const dispatch = useDispatch();
   useEffect(() => {
-    if (courses) {
+    if (!courses) {
       dispatch(getCourses());
     }
   }, []);
@@ -72,30 +72,12 @@ const HomePage = () => {
         position: "relative",
       }}
     >
-      {/* <Box
-        sx={{
-          position: "absolute",
-          display: {
-            xs: "none",
-            md: "flex",
-            top: "0",
-            left: "600px",
-            right: "0",
-            margin: "0 auto",
-            height: { xs: "200px", md: "200px", lg: "100px !important" },
-            width: "450px",
-          },
-        }}
-        component="img"
-        alt="curve"
-        src={TopCurvePic}
-      ></Box> */}
       <Header />
-
       <Box
         sx={{
           borderColor: "#f6f9fa !important",
           backgroundColor: "#f6f9fa !important",
+          marginTop: "100px",
         }}
       >
         <Stack
@@ -105,20 +87,9 @@ const HomePage = () => {
             gap: "20px",
             width: { xs: "90vw", md: "85vw", lg: "80vw" },
             margin: "0px auto",
-            // padding: "10px 10px 50px",
           }}
         >
-          {/* <Typography
-            variant="h4"
-            sx={{
-              fontWeight: "bold",
-              fontSize: "2em",
-              textAlign: "center",
-            }}
-          >
-            Courses
-          </Typography> */}
-          <Search handleSearch={handleSearch} />
+          <Search handleSearch={handleSearch} helperText="Search a course" />
           <CourseList filteredJobs={filteredJobs} />
         </Stack>
       </Box>

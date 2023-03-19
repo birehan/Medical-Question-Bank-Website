@@ -55,6 +55,7 @@ const courseReducer = (state = initialState, action) => {
         loading: false,
         success: false,
         message: action.payload,
+        courses: null,
       };
 
     // get course by id

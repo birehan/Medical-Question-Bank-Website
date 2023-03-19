@@ -3,13 +3,15 @@ import styled from "@emotion/styled";
 const useStyles = styled({
   homepage: {
     flexDirection: "column",
-    height: "100vh",
+    minHeight: "100vh",
     position: "relative",
   },
   homeContent: {
-    flex: "1",
+    // flex: "1",
     flexDirection: { xs: "column-reverse", md: "row" },
     width: "100vw",
+    height: { xs: "fit-content", md: "70vh" },
+    margin: "102px 0px 20px",
   },
   homeTextContainer: {
     flex: 5,
@@ -59,7 +61,7 @@ const useStyles = styled({
       transition: "400ms all ease-in",
       background: "transparent",
     },
-    zIndex: "10",
+    zIndex: "5",
   },
   getStartDot: {
     position: "absolute",
