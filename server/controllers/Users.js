@@ -29,7 +29,6 @@ export const getUserById = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  console.log(req.body);
   const { error } = validateUser(req.body);
   if (error) {
     return res.status(400).send({ message: `${error.details[0].message}` });

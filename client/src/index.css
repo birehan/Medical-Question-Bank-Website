@@ -175,6 +175,23 @@ body {
   border-radius: 10px;
   margin-top: 40px;
 }
+.testimonial-container {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 70vh;
+  max-height: fit-content;
+  background: linear-gradient(
+    108.74deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  box-shadow: 0px 0px 50px -25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(50px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 10px;
+  margin-top: 40px;
+}
 .quest-container {
   height: calc(100vh - 100px) !important;
   overflow: auto;
@@ -538,4 +555,112 @@ figcaption {
 
 .quiz-container {
   min-height: calc(100vh - 600px) !important;
+}
+
+/* check mark css */
+
+.checkbox {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.checkbox:hover {
+  border-color: #666;
+}
+
+.checkmark-line {
+  position: absolute;
+  top: 11px;
+  left: 4px;
+  width: 9px;
+  height: 2px;
+  background-color: green;
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+}
+
+.checkmark-line--short {
+  top: 16px;
+  left: 10px;
+  width: 14px;
+  transform: rotate(-45deg);
+}
+
+.checkmark {
+  stroke: green;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: draw-checkmark 0.3s ease forwards;
+}
+
+.circle {
+  stroke-width: 2;
+  stroke-dasharray: 159;
+  stroke-dashoffset: 159;
+  animation: draw-circle 0.3s ease forwards;
+}
+
+@keyframes draw-checkmark {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 44;
+  }
+}
+
+@keyframes draw-circle {
+  from {
+    stroke-dashoffset: 159;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.circle {
+  stroke-width: 2;
+  stroke-dasharray: 159;
+  stroke-dashoffset: 159;
+  animation: draw-circle 0.3s ease forwards;
+}
+
+.wrong-x {
+  stroke: #ff3b30;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: draw-wrong-x 0.3s ease forwards;
+}
+
+@keyframes draw-circle {
+  from {
+    stroke-dashoffset: 159;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw-wrong-x {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 44;
+  }
+}
+
+#testom-container {
+  width: calc(100% - 100px);
 }

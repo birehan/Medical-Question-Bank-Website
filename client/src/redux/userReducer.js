@@ -181,6 +181,26 @@ const userReducer = (state = initialState, action) => {
         message: action.payload,
       };
 
+    case types.SEND_MESSAGE:
+      return {
+        ...state,
+      };
+    case types.SEND_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        failed: false,
+        message: action.payload,
+      };
+
+    // Update employee conditions
+    case types.SEND_MESSAGE_FAILED:
+      return {
+        ...state,
+        failed: true,
+        message: action.payload,
+      };
+
     default:
       return state;
   }

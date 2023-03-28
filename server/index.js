@@ -17,7 +17,6 @@ import { Strategy } from "passport-google-oauth20";
 const { CLIENT_ID, CLIENT_SECRET } = config.get("google");
 import bodyParser from "body-parser";
 
-import cookieSession from "cookie-session";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -119,7 +118,8 @@ app.use(
   })
 );
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+// limit: "30mb",
 
 app.use(express.json());
 app.use(UserRoute);
@@ -138,3 +138,52 @@ const port = config.get("port") || 8080;
 app.listen(port, () => {
   console.log(`Server up and running...on ${port}`);
 });
+
+// import express from "express";
+// import bodyParser from "body-parser";
+// import multer from "multer";
+// import pdfParser from "pdf-parse";
+// import docx from "docx";
+
+// const app = express();
+
+// // configure multer storage
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
+
+// // configure body-parser
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+
+// // define file upload endpoint
+// app.post("/upload", upload.single("file"), (req, res) => {
+//   const file = req.file;
+
+//   // check if file is a PDF or DOCX
+//   if (file.mimetype === "application/pdf") {
+//     // extract text from PDF
+//     pdfParser(file.buffer)
+//       .then((data) => {
+//         res.json({ text: data.text });
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         res.status(500).json({ message: "Error extracting text from PDF" });
+//       });
+//   } else if (
+//     file.mimetype ===
+//     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+//   ) {
+//     // extract text from DOCX
+//     const doc = new docx.Document(file.buffer);
+//     const text = doc.getText();
+//     res.json({ text: text });
+//   } else {
+//     res.status(400).json({ message: "File must be a PDF or DOCX" });
+//   }
+// });
+
+// // start server
+// app.listen(3000, () => {
+//   console.log("Server started on port 3000");
+// });

@@ -18,14 +18,16 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { updateLikes } from "../actions/questions";
 
 const QuestionSetCard = ({ questionSet }) => {
   const { currentUser } = useSelector((state) => state.users);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -33,6 +35,15 @@ const QuestionSetCard = ({ questionSet }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleLike = () => {
+    if (currentUser) {
+      const data = {
+        id: questionSet?.id,
+        userId: currentUser?.id,
+      };
+      dispatch(updateLikes(data));
+    }
   };
 
   const [openQuestionDetail, setOpenQuestionDetail] = useState(false);
@@ -90,8 +101,27 @@ const QuestionSetCard = ({ questionSet }) => {
               zIndex: "5",
             }}
           >
-            <FavoriteBorderIcon />
-            <Typography>{questionSet?.likes}</Typography>
+            {questionSet?.likes?.includes(currentUser?.id) ? (
+              <FavoriteIcon
+                sx={{
+                  color: "red",
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={handleLike}
+              />
+            ) : (
+              <FavoriteBorderIcon
+                sx={{
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={handleLike}
+              />
+            )}
+            <Typography>{questionSet?.likes?.length}</Typography>
           </Stack>
         </Stack>
         <Typography

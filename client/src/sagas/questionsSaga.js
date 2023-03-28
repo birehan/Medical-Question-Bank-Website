@@ -61,6 +61,15 @@ function* updateQuestions({ payload }) {
   }
 }
 
+function* updateLike({ payload }) {
+  try {
+    const question = yield call(api.updateLike, payload);
+    yield put({ type: types.ADD_LIKE_SUCCESS, payload: question });
+  } catch (error) {
+    yield put({ type: types.ADD_LIKE_FAILED, payload: error });
+  }
+}
+
 function* deleteQuestions({ payload }) {
   try {
     const question = yield call(api.deleteQuestions, payload);
@@ -77,6 +86,8 @@ function* questionSaga() {
 
   yield takeEvery(types.CREATE_QUESTIONS, createQuestions);
   yield takeEvery(types.UPDATE_QUESTIONS, updateQuestions);
+  yield takeEvery(types.ADD_LIKE, updateLike);
+
   yield takeEvery(types.DELETE_QUESTIONS, deleteQuestions);
 }
 

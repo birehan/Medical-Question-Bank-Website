@@ -59,6 +59,14 @@ export const createUser = async (user) => {
     }
   }
 };
+export const sendMessage = async (message) => {
+  try {
+    const { data } = await axios.post(url + "sendmessage", message);
+    return data;
+  } catch (error) {
+    throw error?.response?.data?.message;
+  }
+};
 
 export const login = async (user) => {
   try {

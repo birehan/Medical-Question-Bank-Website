@@ -144,13 +144,14 @@ const Header = () => {
               <Box
                 onClick={() => {
                   setSelected("testimonials");
+                  navigate("/testimonials");
                 }}
                 title="Testimonials"
                 sx={{
                   ...classes.headerLinks,
-                  color: selected === "testimonials" ? "#00B5BE" : "#263238",
+                  color: pathname === "/testimonials" ? "#00B5BE" : "#263238",
                   borderBottom:
-                    selected === "testimonials" ? "3px solid #00B5BE" : "",
+                    pathname === "/testimonials" ? "3px solid #00B5BE" : "",
                 }}
               >
                 Testimonials
@@ -158,13 +159,14 @@ const Header = () => {
               <Box
                 onClick={() => {
                   setSelected("contact");
+                  navigate("/contact");
                 }}
                 title="Contact"
                 sx={{
                   ...classes.headerLinks,
-                  color: selected === "contact" ? "#00B5BE" : "#263238",
+                  color: pathname === "/contact" ? "#00B5BE" : "#263238",
                   borderBottom:
-                    selected === "contact" ? "3px solid #00B5BE" : "",
+                    pathname === "/contact" ? "3px solid #00B5BE" : "",
                 }}
               >
                 Contact-us

@@ -5,6 +5,7 @@ import Loader from "../../../components/Loader";
 
 const QuestionsList = ({ questions }) => {
   const [curPage, setCurPage] = useState(1);
+  const [lengthChange, setLengthChange] = useState(questions?.length);
   const exercisePerPage = 9;
 
   const lastIndex = curPage * exercisePerPage;
@@ -16,8 +17,11 @@ const QuestionsList = ({ questions }) => {
     window.scrollTo({ top: 0 });
   };
   useEffect(() => {
-    setCurPage(1);
-  }, [questions]);
+    if (questions?.length != lengthChange) {
+      setCurPage(1);
+    }
+    setLengthChange(questions?.length);
+  }, [lengthChange, questions]);
 
   if (!questions) {
     return <Loader />;

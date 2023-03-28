@@ -6,6 +6,7 @@ import {
   forgetPassword,
   resetPassword,
   resetPasswordPost,
+  sendMessage,
 } from "../controllers/Auth.js";
 const router = express.Router();
 import passport from "passport";
@@ -17,6 +18,7 @@ router.post("/login", Login);
 router.post("/forgetpassword", forgetPassword);
 router.get("/reset-password/:token", resetPassword);
 router.post("/reset-password/:token", resetPasswordPost);
+router.post("/sendmessage", sendMessage);
 
 router.delete("/logout", logOut);
 
@@ -54,3 +56,5 @@ router.get(
 );
 
 export default router;
+
+

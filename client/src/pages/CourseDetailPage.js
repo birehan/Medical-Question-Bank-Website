@@ -1,13 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 
-import {
-  Stack,
-  Box,
-  Typography,
-  Button,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Stack, Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Header from "../components/Header.js";
 import { getQuestionsByCourseId } from "../features/questionsets/actions/questions";
 import { useSelector } from "react-redux";
@@ -83,6 +76,7 @@ const CourseDetailPage = () => {
       sx={{
         minHeight: "100vh",
         backgroundColor: "#f6f9fa !important",
+        width: "100vw",
       }}
     >
       <Header />
@@ -91,6 +85,7 @@ const CourseDetailPage = () => {
           flexDirection: { xs: "column", lg: "row" },
           flex: 1,
           mt: "100px",
+          width: "100vw",
         }}
       >
         <Box

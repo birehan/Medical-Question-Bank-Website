@@ -21,6 +21,11 @@ import QuizPage from "./pages/QuizPage";
 import SendMail from "./pages/SendMail";
 import EmailSent from "./pages/EmailSent";
 import ResetPassword from "./pages/ResetPassword";
+import TestimonialPage from "./pages/TestimonialPage";
+import ContactPage from "./pages/ContactPage";
+
+import QuestionExtractor from "./features/questionsets/components/QuestionExtractor";
+
 const App = () => {
   const { currentUser } = useSelector((state) => state.users);
 
@@ -46,8 +51,8 @@ const App = () => {
 
         <Route path="/course/:id" exact element={<CourseDetailPage />} />
         <Route path="/about" exact element={<AboutPage />} />
-        <Route path="/testimonials" exact element={<HomePage />} />
-        <Route path="/contact" exact element={<HomePage />} />
+        <Route path="/testimonials" exact element={<TestimonialPage />} />
+        <Route path="/contact" exact element={<ContactPage />} />
 
         <Route
           path="/login"
@@ -60,6 +65,8 @@ const App = () => {
           element={currentUser ? <Navigate to="/home" /> : <SignUpPage />}
         />
         <Route path="/forgetpassword" exact element={<ForgetPasswordPage />} />
+
+        <Route path="/extractquestion" exact element={<QuestionExtractor />} />
       </Routes>
     </Router>
   );

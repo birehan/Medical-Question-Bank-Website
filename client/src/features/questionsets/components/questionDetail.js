@@ -10,7 +10,6 @@ import {
   Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
@@ -19,6 +18,7 @@ import HelperText from "../../../components/HelperText.js";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HelpIcon from "@mui/icons-material/Help";
+import { updateLikes } from "../actions/questions.js";
 
 const QuestionDetail = ({
   openQuestionDetail,
@@ -46,6 +46,15 @@ const QuestionDetail = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const handleLike = () => {
+    if (currentUser) {
+      const data = {
+        id: questionSet?.id,
+        userId: currentUser?.id,
+      };
+      dispatch(updateLikes(data));
+    }
+  };
   return (
     <Drawer
       anchor="right"
@@ -122,7 +131,7 @@ const QuestionDetail = ({
                   alignItems: "center",
                 }}
               >
-                <HelpIcon sx={{ color: "#20839e", fontSize: "2rem" }} />
+                <HelpIcon sx={{ color: "#20839e", fontSize: "2.3rem" }} />
                 <Stack sx={{ alignItems: "center" }}>
                   <Typography>{questionSet?.questionCount}</Typography>
                   <Typography>Questions</Typography>
@@ -136,11 +145,30 @@ const QuestionDetail = ({
                   alignItems: "center",
                 }}
               >
-                <FavoriteBorderIcon
-                  sx={{ color: "#20839e", fontSize: "2rem" }}
-                />
+                {questionSet?.likes?.includes(currentUser?.id) ? (
+                  <FavoriteIcon
+                    sx={{
+                      color: "red",
+                      "&:hover": {
+                        cursor: "pointer",
+                      },
+                      fontSize: "2rem",
+                    }}
+                    onClick={handleLike}
+                  />
+                ) : (
+                  <FavoriteBorderIcon
+                    sx={{
+                      "&:hover": {
+                        cursor: "pointer",
+                      },
+                      fontSize: "2rem",
+                    }}
+                    onClick={handleLike}
+                  />
+                )}
                 <Stack sx={{ alignItems: "center" }}>
-                  <Typography>{questionSet?.likes}</Typography>
+                  <Typography>{questionSet?.likes?.length}</Typography>
                   <Typography>Likes</Typography>
                 </Stack>
               </Stack>

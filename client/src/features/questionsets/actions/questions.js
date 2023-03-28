@@ -19,6 +19,10 @@ export const createQuestions = (questions) => {
 export const updateQuestions = (questions) => {
   return { type: constants.UPDATE_QUESTIONS, payload: questions };
 };
+
+export const updateLikes = (data) => {
+  return { type: constants.ADD_LIKE, payload: data };
+};
 export const deleteQuestions = (id) => {
   return { type: constants.DELETE_QUESTIONS, payload: id };
 };

@@ -120,6 +120,35 @@ const questionReducer = (state = initialState, action) => {
         success: false,
         message: action.payload,
       };
+
+    case types.ADD_LIKE:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.ADD_LIKE_SUCCESS:
+      return {
+        ...state,
+        // questions: state?.questions?.filter(
+        //   (question) => question?.id !== action?.payload?.id
+        // ),
+        questions: state.questions.map((question) =>
+          question.id === action.payload.id
+            ? { ...question, likes: action?.payload?.likes }
+            : question
+        ),
+        loading: false,
+        success: true,
+        message: action.payload,
+      };
+    case types.ADD_LIKE_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        message: action.payload,
+      };
+
     case types.CLEAN_UP_QUESTIONS:
       return {
         ...state,

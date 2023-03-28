@@ -10,7 +10,7 @@ export const getCourses = async (req, res) => {
     });
     res.status(200).json(response);
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 // get course by Id
@@ -21,7 +21,7 @@ export const getCourseById = async (req, res) => {
     },
     attributes: ["id", "title", "image", "description"],
   });
-  if (!course) return res.status(404).json({ msg: "Course not found" });
+  if (!course) return res.status(404).json({ message: "Course not found" });
   return res.status(200).json(course);
 };
 
@@ -31,7 +31,7 @@ export const createCourse = async (req, res) => {
   const { filename } = req.file;
 
   if (!title || !filename || !description) {
-    res.status(422).json({ status: 422, msg: "fill all the details" });
+    res.status(422).json({ status: 422, message: "fill all the details" });
   }
 
   try {

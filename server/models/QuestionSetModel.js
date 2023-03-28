@@ -45,10 +45,11 @@ export const QuestionSets = db.define(
       },
     },
     likes: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: [],
     },
+
     questionCount: {
       type: DataTypes.INTEGER,
       allowNull: false,

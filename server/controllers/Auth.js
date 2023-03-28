@@ -37,7 +37,9 @@ export const Login = async (req, res) => {
     return res.status(400).json({ message: "Wrong email or password!" });
   req.session.userId = user.id;
 
-  res.status(200).json({ name: user?.name, email: email, role: user?.role });
+  res
+    .status(200)
+    .json({ name: user?.name, email: email, role: user?.role, id: user?.id });
 };
 
 export const Me = async (req, res) => {
@@ -45,7 +47,7 @@ export const Me = async (req, res) => {
     return res.status(401).json({ message: "First log in!" });
   }
   const user = await Users.findOne({
-    attributes: ["name", "email", "role"],
+    attributes: ["name", "email", "role", "id"],
     where: {
       id: req.session.userId,
     },
@@ -195,6 +197,8 @@ export const forgetPassword = async (req, res) => {
   }
 };
 
+// Route to handle forgot password submission
+
 // Route to handle reset password page
 
 export const resetPassword = async (req, res) => {
@@ -254,5 +258,34 @@ export const resetPasswordPost = async (req, res) => {
     });
   } catch (error) {
     res.status(404).send("reset-password error!");
+  }
+};
+
+export const sendMessage = async (req, res) => {
+  try {
+    const { username, email, message } = req.body;
+    if (!username || !email || !message) {
+      res.status(422).json({ status: 422, message: "fill all the details" });
+      return;
+    }
+
+    const mailOptions = {
+      to: "tsegawmolla@medquizet.com",
+      from: `'Message from ${username}' <${email}>`,
+      // subject: "Password reset request",
+      auth: {
+        user: "tsegawmolla@medquizet.com",
+        pass: "Medquizet4549abc",
+      },
+      text: message,
+    };
+
+    const response = await transporter.sendMail(mailOptions);
+    res.send({ message: response });
+  } catch (error) {
+    res.status(404).send({
+      message:
+        "An error occurred while processing your request. Please try again.",
+    });
   }
 };

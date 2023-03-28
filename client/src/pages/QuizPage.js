@@ -1,30 +1,24 @@
 import React, { useEffect, useState, useMemo } from "react";
 
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box, Typography, Button } from "@mui/material";
 import Header from "../components/Header.js";
-import { getQuestionsByCourseId } from "../features/questionsets/actions/questions";
 import { useSelector } from "react-redux";
 
-import Search from "../components/Search.js";
 import { useDispatch } from "react-redux";
-import { getCourses, cleanUp } from "../features/courses/actions/courses";
 import { useParams, useLocation } from "react-router-dom";
-import QuestionsList from "../features/questionsets/components/QuestionsList.js";
-import CourseSelector from "../features/courses/components/CourseSelector.js";
-import Footer from "../components/Footer.js";
-import UnitFilter from "../features/units/components/UnitFilter.js";
-import { getUnits } from "../features/units/actions/units.js";
+
 import { getQuestionsById } from "../features/questionsets/actions/questions.js";
 import QuestionCard from "../features/questionsets/components/QuestionCard.js";
 import TimeCounter from "../features/questionsets/components/TimeCounter.js";
+import QuizSetNumber from "../features/questionsets/components/QuizSetNumber.js";
 
+import DoneDialog from "../features/questionsets/components/DoneDialog.js";
 const QuizPage = () => {
   const [score, setScore] = useState(0);
   const { id } = useParams();
   const { state } = useLocation();
-  const { questions } = useSelector((state) => state.questions);
   const { questionSets } = useSelector((state) => state.courseDetail);
-  const [unitFilter, setUnitFilter] = useState("");
+  const [qestionStates, setQuestionStates] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -32,21 +26,21 @@ const QuizPage = () => {
     dispatch(getQuestionsById(id));
   }, []);
 
+  useEffect(() => {
+    let states = [];
+
+    for (let i = 0; i < questionSets.length; i++) {
+      states.push({
+        ...questionSets[i],
+        notDone: true,
+        correct: false,
+        wrong: false,
+      });
+    }
+    setQuestionStates(states);
+  }, [questionSets]);
+
   const { courses, success } = useSelector((state) => state.courses);
-
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    if (!courses) {
-      dispatch(getCourses());
-    }
-  }, []);
-
-  useEffect(() => {
-    if (success) {
-      dispatch(cleanUp());
-    }
-  }, [success]);
 
   return (
     <Stack
@@ -60,11 +54,10 @@ const QuizPage = () => {
     >
       <Header />
       <Stack
-        // className="questions-container"
         sx={{
           flexDirection: { xs: "column", md: "column", lg: "row" },
           flex: 1,
-          width: { xs: "90%", md: "90%", lg: "90%" },
+          width: { xs: "95%", sm: "95%", md: "90%" },
           margin: "auto",
           gap: "50px",
           mt: "102px",
@@ -86,7 +79,7 @@ const QuizPage = () => {
               overflow: "auto",
             }}
           >
-            <Box
+            <Stack
               sx={{
                 height: "60px",
                 background: "white",
@@ -95,16 +88,19 @@ const QuizPage = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 borderRadius: "10px",
+                flexDirection: "row",
               }}
             >
               <Typography>{state?.questionSet?.title}</Typography>
-            </Box>
+
+              <DoneDialog qestionStates={qestionStates} />
+            </Stack>
 
             <Stack
               sx={{
                 flex: 1,
                 background: "white",
-                padding: "50px 30px",
+                padding: { xs: "30px 15px", md: "50px 10px" },
                 borderRadius: "10px",
                 height: 1,
               }}
@@ -112,7 +108,7 @@ const QuizPage = () => {
               {questionSets && questionSets?.length ? (
                 <Stack
                   sx={{
-                    gap: "50px",
+                    gap: { xs: "30px", md: "50px" },
                     justifyContent: "center",
                     alignItems: "center",
 
@@ -127,6 +123,8 @@ const QuizPage = () => {
                         index={index}
                         setScore={setScore}
                         score={score}
+                        qestionStates={qestionStates}
+                        setQuestionStates={setQuestionStates}
                       />
                     );
                   })}
@@ -180,7 +178,7 @@ const QuizPage = () => {
                   borderRadius: "10px",
                 }}
               >
-                part 2
+                <QuizSetNumber qestionStates={qestionStates} />
               </Box>
             </Stack>
           </Stack>

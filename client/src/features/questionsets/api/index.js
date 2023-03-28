@@ -48,7 +48,6 @@ export const getQuestionsById = async (id) => {
 
 export const createQuestions = async (formdata) => {
   try {
-    console.log("data: ", formdata);
     const { data } = await transport.post(`${url}/questions`, formdata);
     return data;
   } catch (error) {
@@ -62,6 +61,15 @@ export const updateQuestions = async (questions) => {
       `${url}/questions/${questions.id}`,
       questions
     );
+    return data;
+  } catch (error) {
+    throw error?.response?.data?.message;
+  }
+};
+
+export const updateLike = async (file) => {
+  try {
+    const { data } = await transport.put(`${url}/updateLike`, file);
     return data;
   } catch (error) {
     throw error?.response?.data?.message;

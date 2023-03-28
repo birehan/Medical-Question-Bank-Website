@@ -4,16 +4,25 @@ import {
   getCourseQuestionSets,
   createQuestionSets,
   getQuestionSet,
-  updateQuestionSet,
+  updateLike,
   deleteQuestionSet,
+  updateQuestionSet,
+  extractQuestions,
 } from "../controllers/QuestionSets.js";
 
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
+
+import multer from "multer";
+// configure multer storage
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const router = express.Router();
 router.get("/questions/", getAllQuestionSets);
 router.get("/courses/:courseId/questions", getCourseQuestionSets);
 router.get("/questions/:questionSetId", verifyUser, getQuestionSet);
+
+router.post("/extractquestion", upload.single("file"), extractQuestions);
 
 router.post("/questions", verifyUser, adminOnly, createQuestionSets);
 router.put(
@@ -22,6 +31,7 @@ router.put(
   adminOnly,
   updateQuestionSet
 );
+router.put("/updateLike", verifyUser, updateLike);
 
 router.delete(
   "/questions/:questionSetId",

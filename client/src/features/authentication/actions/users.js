@@ -10,6 +10,7 @@ import {
   GET_LOGGED_USER,
   FORGET_PASSWORD,
   RESET_PASSWORD,
+  SEND_MESSAGE,
 } from "../../../constants/actionTypes.js";
 
 export const getUsers = () => {
@@ -52,4 +53,8 @@ export const forgetPassword = (data) => {
 
 export const resetPassword = (data) => {
   return { type: RESET_PASSWORD, payload: data };
+};
+
+export const sendMessage = (data) => {
+  return { type: SEND_MESSAGE, payload: data };
 };

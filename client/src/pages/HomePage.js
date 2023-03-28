@@ -6,8 +6,7 @@ import Search from "../components/Search.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getCourses, cleanUp } from "../features/courses/actions/courses";
-import CourseCard from "../features/courses/components/CourseCard";
-import UnitSection from "../features/units/components/UnitContent";
+
 import CourseList from "../features/courses/components/CourseList";
 import Loading from "../components/Loading.js";
 import Footer from "../components/Footer";
@@ -17,7 +16,6 @@ const HomePage = () => {
   const { courses, success } = useSelector((state) => state.courses);
 
   const [search, setSearch] = useState("");
-  console.log("course: ", courses);
 
   const handleSearch = (text) => {
     console.log(courses);
@@ -43,21 +41,6 @@ const HomePage = () => {
       dispatch(cleanUp());
     }
   }, [success]);
-
-  window.onscroll = function () {
-    myFunction();
-  };
-
-  function myFunction() {
-    var header = document.getElementById("myHeader");
-    var sticky = header?.offsetTop;
-
-    if (window.pageYOffset > sticky) {
-      header?.classList?.add("sticky");
-    } else {
-      header?.classList?.remove("sticky");
-    }
-  }
 
   if (!filteredJobs || !courses) {
     return <Loading />;

@@ -14,6 +14,18 @@ function* createUser({ payload }) {
   }
 }
 
+function* sendMessage({ payload }) {
+  try {
+    const user = yield call(api.sendMessage, payload);
+    yield put({ type: types.SEND_MESSAGE_SUCCESS, payload: user });
+  } catch (error) {
+    yield put({
+      type: types.SEND_MESSAGE_FAILED,
+      payload: error,
+    });
+  }
+}
+
 function* forgetPassword({ payload }) {
   try {
     const unit = yield call(api.forgetPassword, payload);
@@ -103,6 +115,9 @@ function* userSaga() {
 
   yield takeEvery(types.UPDATE_USER, updateUser);
   yield takeEvery(types.DELETE_USER, deleteUser);
+
+  yield takeEvery(types.SEND_MESSAGE, sendMessage);
+
 }
 
 export default userSaga;
