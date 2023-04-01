@@ -1,16 +1,9 @@
 import React from "react";
-import { Box, Input, Button } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-// import { searchJobs } from "../features/jobs/actions/jobs";
-import { useNavigate } from "react-router-dom";
+import { Box, Input } from "@mui/material";
 import useStyles from "./Style";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = ({ handleSearch, helperText }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   return (
     <Box sx={useStyles.searchContainer}>
       <Input

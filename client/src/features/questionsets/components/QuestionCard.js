@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Stack, Typography, Button, Box } from "@mui/material";
 
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import RightMark from "./RightMark";
 
@@ -142,92 +141,16 @@ const QuestionCard = ({
                       </Typography>
                       {selectedValue !== null &&
                       showAnimation &&
-                      parseInt(selectedValue) === parseInt(choice?.id) ? (
+                      selectedValue === choice?.id ? (
                         <RightMark
                           showAnimation={showAnimation}
                           setShowAnimation={setShowAnimation}
-                          isCorrect={
-                            parseInt(selectedValue) ===
-                            parseInt(question?.answer)
-                          }
+                          isCorrect={selectedValue === question?.answer}
                         />
                       ) : (
                         ""
                       )}
                     </Stack>
-
-                    // <FormControlLabel
-                    //   onClick={() => {
-                    //     if (selectedValue === null) {
-                    //       setSelectedValue(choice?.id);
-                    //     }
-                    //   }}
-                    //   key={index}
-                    //   className={`question-choice
-
-                    // `}
-                    //   sx={{
-                    //     p: "7px 15px",
-                    //     //   border: "1px solid silver",
-                    //     borderRadius: "5px",
-                    //     fontFamily: "sans-sarif",
-                    //   }}
-                    //   value={choice?.id}
-                    //   control={
-                    //     selectedValue !== null &&
-                    //     parseInt(choice?.id) === parseInt(question?.answer) &&
-                    //     showAnimation ? (
-                    //       <RightMark
-                    //         showAnimation={showAnimation}
-                    //         setShowAnimation={setShowAnimation}
-                    //       />
-                    //     ) : (
-                    //       <Button
-                    //         sx={{
-                    //           // background: "silver",
-                    //           background:
-                    //             selectedValue !== null &&
-                    //             choice?.id === question.answer
-                    //               ? "green"
-                    //               : selectedValue === choice.id
-                    //               ? "red"
-                    //               : "rgb(234, 234, 234)",
-                    //           mr: "20px",
-                    //           padding: "20px -10px !important",
-                    //           color: "black",
-                    //           "&:hover": {
-                    //             background:
-                    //               selectedValue !== null &&
-                    //               choice?.id === question.answer
-                    //                 ? "green"
-                    //                 : selectedValue === choice.id
-                    //                 ? "red"
-                    //                 : "rgb(200, 196, 196)",
-                    //           },
-                    //           transition: "400ms all ease-in",
-                    //         }}
-                    //       >
-                    //         {String.fromCharCode(65 + index)}
-                    //       </Button>
-                    //     )
-                    //   }
-                    //   label={
-                    //     <Typography
-                    //       sx={{ fontSize: "20px", fontFamily: "sans-sarif" }}
-                    //     >
-                    //       {choice?.value}
-                    //     </Typography>
-                    //   }
-                    // >
-                    //   {/* {true ? ( */}
-                    //   <RightMark
-                    //     showAnimation={showAnimation}
-                    //     setShowAnimation={setShowAnimation}
-                    //   />
-                    //   {/* ) : ( */}
-                    //   {/* "" */}
-                    //   {/* )} */}
-                    // </FormControlLabel>
                   );
                 })
               : ""}

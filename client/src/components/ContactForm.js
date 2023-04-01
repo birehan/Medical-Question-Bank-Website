@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import {
   Button,
@@ -12,7 +12,6 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import useStyles from "../features/authentication/components/Forms/Style.js";
-import { useNavigate } from "react-router-dom";
 // import { cleanUp, createCourse, updateCourse } from "../actions/courses.js";
 import { sendMessage } from "../features/authentication/actions/users.js";
 

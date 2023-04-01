@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Stack,
@@ -10,30 +10,34 @@ import {
   Box,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { createUser, getLoggedUser } from "../../actions/users.js";
+import { createUser, cleanUp } from "../../actions/users.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import useStyles from "./Style.js";
 import GoogleIcon from "../../../../assets/google.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import HelperText from "../../../../components/HelperText.js";
 import Checkbox, { checkboxClasses } from "@mui/material/Checkbox";
 
 const SignupForm = () => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const [googleCalled, setGoogleCalled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { message } = useSelector((state) => state.users);
+  // const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(cleanUp());
+  }, [location, dispatch]);
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
-    defaultValues: {},
-  });
+  } = useForm({});
 
   const onSubmit = (data) => {
     dispatch(
@@ -47,19 +51,29 @@ const SignupForm = () => {
 
   const googleAuth = async () => {
     window.open(`http://localhost:8080/auth/google/callback`, "_self");
-    setGoogleCalled(true);
   };
 
-  useEffect(() => {
-    if (googleCalled) {
-      dispatch(getLoggedUser());
-    }
-  }, [googleCalled]);
+  // useEffect(() => {
+  //   if (googleCalled) {
+  //     dispatch(getLoggedUser());
+  //   }
+  // }, [googleCalled, dispatch]);
 
   return (
     <Stack sx={{ width: "100%", gap: "10px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* username start */}
+        {message && (
+          <Typography
+            sx={{
+              color: "red",
+              textAlign: "center",
+              mb: "10px",
+            }}
+          >
+            {message}
+          </Typography>
+        )}
         <HelperText text="Username" />
         <FormControl variant="outlined" fullWidth>
           <Input
@@ -91,7 +105,7 @@ const SignupForm = () => {
         <HelperText text="Email" />
         <FormControl variant="outlined" fullWidth>
           <Input
-            disableUnderline="false"
+            disableUnderline
             sx={{
               m: "15px 0 !important",
               background: "rgba(176, 186, 195, 0.19) !important",
@@ -129,7 +143,7 @@ const SignupForm = () => {
               padding: "10px 16px !important",
               borderRadius: "5px",
             }}
-            disableUnderline="false"
+            disableUnderline
             placeholder="Password"
             name="password"
             type="password"
@@ -156,7 +170,7 @@ const SignupForm = () => {
         <HelperText text="Confirm Password" />
         <FormControl variant="outlined" fullWidth>
           <Input
-            disableUnderline="false"
+            disableUnderline
             sx={{
               m: "15px 0 !important",
               background: "rgba(176, 186, 195, 0.19) !important",

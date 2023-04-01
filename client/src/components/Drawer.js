@@ -13,14 +13,54 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
-import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import useStyles from "./Style";
 
 import { logOutUser } from "../features/authentication/actions/users.js";
 import { useDispatch } from "react-redux";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import Logo from "../assets/logo.png";
 
+const links = [
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "Questions",
+    path: "/home",
+  },
+  {
+    name: "About",
+    path: "/about",
+  },
+  {
+    name: "Testimonials",
+    path: "/testimonials",
+  },
+  {
+    name: "Contact-Us",
+    path: "/contact",
+  },
+];
+
+const useStyles = {
+  loginLinks: {
+    color: "white",
+    background: "#039198",
+    borderRadius: "70px",
+    padding: "2px 30px",
+    // fontSize: { lg: "18px", md: "16px" },
+
+    "&:hover": {
+      background: "#039198",
+
+      border: "1px solid #4d99b6",
+      // transition: "300ms all ease-in",
+      opacity: "0.7",
+    },
+  },
+};
 const DrawerComponent = ({ openDrawer, setOpenDrawer }) => {
   const { currentUser } = useSelector((state) => state.users);
   const navigate = useNavigate();
@@ -32,13 +72,6 @@ const DrawerComponent = ({ openDrawer, setOpenDrawer }) => {
         anchor="top"
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
-        sx={{
-          "& .MuiDrawer-paper": {
-            transform: "translateY(-50%)",
-            display: "flex",
-            justifyContent: "center",
-          },
-        }}
       >
         <List>
           <ListItem Button>
@@ -97,6 +130,7 @@ const DrawerComponent = ({ openDrawer, setOpenDrawer }) => {
                           height: "40px",
                         }}
                       ></Box>
+
                       <Typography
                         sx={{ mt: "20px", fontSize: "20px", color: "#078989" }}
                       >
@@ -110,206 +144,83 @@ const DrawerComponent = ({ openDrawer, setOpenDrawer }) => {
               </Stack>
             </Link>
           </ListItem>
-          <Divider />
 
           {currentUser ? (
-            <ListItem Button>
-              <Link
-                onClick={() => navigate("/")}
-                sx={{
-                  color: "black",
-                  fontSize: { lg: "20px", md: "22px" },
-                  textDecoration: "none",
-                  "&:hover": {
-                    cursor: "pointer",
-                    color: "#4d99b6",
-                    transition: "300ms all ease-in",
-                  },
-                  width: "100%",
-                }}
-              >
-                <Stack sx={{ flexDirection: "row", gap: "20px" }}>
-                  <Box
+            <Stack>
+              <Divider />
+              <ListItem Button>
+                <Link
+                  sx={{
+                    color: "black",
+                    fontSize: { lg: "20px", md: "22px" },
+                    textDecoration: "none",
+                    "&:hover": {
+                      cursor: "pointer",
+                      color: "#4d99b6",
+                      transition: "300ms all ease-in",
+                    },
+                    width: "100%",
+                  }}
+                >
+                  <Stack
                     sx={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                      background: "grey",
+                      flexDirection: "row",
+                      gap: "20px",
+                      alignItems: "center",
                     }}
-                  ></Box>
-                  <Stack>
+                  >
+                    <AccountCircleIcon
+                      sx={{ color: "silver", fontSize: "2rem" }}
+                    />
                     <Typography sx={{ fontWeight: "bold" }}>
                       {currentUser?.name}
                     </Typography>
                   </Stack>
-                </Stack>
-              </Link>
-            </ListItem>
+                </Link>
+              </ListItem>
+            </Stack>
           ) : (
             ""
           )}
           <Divider />
-          <ListItem Button>
-            <Link
-              onClick={() => {
-                navigate("/");
-                setOpenDrawer(false);
-              }}
-              sx={{
-                color: "black",
-                fontSize: { lg: "27px", md: "22px" },
-                textDecoration: "none",
-                p: "5px 0",
+          {links.map((link, index) => {
+            return (
+              <Stack key={index}>
+                <ListItem Button>
+                  <Link
+                    onClick={() => {
+                      navigate(link.path);
+                      setOpenDrawer(false);
+                    }}
+                    sx={{
+                      color: "black",
+                      fontSize: { lg: "27px", md: "22px" },
+                      textDecoration: "none",
+                      p: "5px 0",
 
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "#4d99b6",
-                  transition: "300ms all ease-in",
-                },
-                width: "100%",
-              }}
-            >
-              <Typography
-                sx={{
-                  // color: "white",
-                  fontSize: "1.2rem",
-                  fontWeight: "400",
-                }}
-              >
-                Home
-              </Typography>
-            </Link>
-          </ListItem>
-          <Divider />
-          <ListItem Button>
-            <Link
-              onClick={() => {
-                navigate("/home");
-                setOpenDrawer(false);
-              }}
-              sx={{
-                color: "black",
-                fontSize: { lg: "27px", md: "22px" },
-                textDecoration: "none",
-                p: "5px 0",
-
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "#4d99b6",
-                  transition: "300ms all ease-in",
-                },
-                width: "100%",
-              }}
-            >
-              <Typography
-                sx={{
-                  // color: "white",
-                  fontSize: "1.2rem",
-                  fontWeight: "400",
-                }}
-              >
-                Questions
-              </Typography>
-            </Link>
-          </ListItem>
-          <Divider />
-
-          <ListItem Button>
-            <Link
-              onClick={() => {
-                navigate("/about");
-                setOpenDrawer(false);
-              }}
-              sx={{
-                color: "black",
-                fontSize: { lg: "27px", md: "22px" },
-                textDecoration: "none",
-                p: "5px 0",
-
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "#4d99b6",
-                  transition: "300ms all ease-in",
-                },
-                width: "100%",
-              }}
-            >
-              <Typography
-                sx={{
-                  // color: "white",
-                  fontSize: "1.2rem",
-                  fontWeight: "400",
-                }}
-              >
-                About Us
-              </Typography>
-            </Link>
-          </ListItem>
-          <Divider />
-
-          <ListItem Button>
-            <Link
-              onClick={() => {
-                navigate("/testimonials");
-                setOpenDrawer(false);
-              }}
-              sx={{
-                color: "black",
-                fontSize: { lg: "27px", md: "22px" },
-                textDecoration: "none",
-                p: "5px 0",
-
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "#4d99b6",
-                  transition: "300ms all ease-in",
-                },
-                width: "100%",
-              }}
-            >
-              <Typography
-                sx={{
-                  // color: "white",
-                  fontSize: "1.2rem",
-                  fontWeight: "400",
-                }}
-              >
-                Testimonials
-              </Typography>
-            </Link>
-          </ListItem>
-          <Divider />
-          <ListItem Button>
-            <Link
-              onClick={() => {
-                navigate("/contact");
-                setOpenDrawer(false);
-              }}
-              sx={{
-                color: "black",
-                fontSize: { lg: "27px", md: "22px" },
-                textDecoration: "none",
-                p: "5px 0",
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "#4d99b6",
-                  transition: "300ms all ease-in",
-                },
-                width: "100%",
-              }}
-            >
-              <Typography
-                sx={{
-                  // color: "white",
-                  fontSize: "1.2rem",
-                  fontWeight: "400",
-                }}
-              >
-                Contact-Us
-              </Typography>
-            </Link>
-          </ListItem>
-          <Divider />
+                      "&:hover": {
+                        cursor: "pointer",
+                        color: "#4d99b6",
+                        transition: "300ms all ease-in",
+                      },
+                      width: "100%",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        // color: "white",
+                        fontSize: "1.2rem",
+                        fontWeight: "400",
+                      }}
+                    >
+                      {link.name}
+                    </Typography>
+                  </Link>
+                </ListItem>
+                <Divider />
+              </Stack>
+            );
+          })}
 
           {currentUser ? (
             <ListItem Button>
@@ -386,7 +297,7 @@ const DrawerComponent = ({ openDrawer, setOpenDrawer }) => {
                   Login
                 </Button>
                 <Button
-                  onClick={() => navigate("/signup/choice")}
+                  onClick={() => navigate("/signup")}
                   sx={useStyles.loginLinks}
                 >
                   Sign Up

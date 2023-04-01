@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Dialog,
@@ -7,6 +7,7 @@ import {
   DialogTitle,
   Box,
 } from "@mui/material";
+import CompleteVector from "../../../assets/complete.png";
 
 const styles = {
   button: {
@@ -19,6 +20,7 @@ const styles = {
   },
   dialogContent: {
     padding: "20px",
+    display: "inline-block",
   },
   results: {
     listStyle: "none",
@@ -71,61 +73,60 @@ function CompleteDialog({ openComplete, setOpenComplete, qestionStates }) {
           >
             Exam Completed
           </DialogTitle>
-          <Box sx={{ padding: "10px 20px" }}>
-            <DialogContent style={styles.dialogContent}>
-              <p>Congratulations, you have completed the exam!</p>
-              <p>Here are your results:</p>
-              <ul style={styles.results}>
-                <li style={styles.resultItem}>
-                  Correct Answers: {correct}/{correct + wrong + skipped}
-                </li>
-                <li style={styles.resultItem}>
-                  Wrong Answers: {wrong}/{correct + wrong + skipped}
-                </li>
-                <li style={styles.resultItem}>
-                  Skipped Questions: {skipped}/{correct + wrong + skipped}
-                </li>
-              </ul>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} style={styles.closeButton}>
-                OK
-              </Button>
-            </DialogActions>
+          <Box
+            sx={{
+              padding: "10px 20px",
+              display: "flex",
+              flexDirection: {
+                xs: "column",
+                md: "row",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                display: { xs: "none", md: "inline-block" },
+                width: "200px",
+                height: "cover",
+                margin: "auto 20px",
+                justifyContent: "center",
+                alignSelf: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={CompleteVector}
+                alt="Complete"
+                style={{ width: "100%" }}
+              />
+            </Box>
+
+            <Box>
+              <DialogContent style={styles.dialogContent}>
+                <p>Congratulations, you have completed the exam!</p>
+                <p>Here are your results:</p>
+                <ul style={styles.results}>
+                  <li style={styles.resultItem}>
+                    Correct Answers: {correct}/{correct + wrong + skipped}
+                  </li>
+                  <li style={styles.resultItem}>
+                    Wrong Answers: {wrong}/{correct + wrong + skipped}
+                  </li>
+                  <li style={styles.resultItem}>
+                    Skipped Questions: {skipped}/{correct + wrong + skipped}
+                  </li>
+                </ul>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} style={styles.closeButton}>
+                  OK
+                </Button>
+              </DialogActions>
+            </Box>
           </Box>
         </Box>
       </Dialog>
     </Box>
-    // <div>
-    //   <Button variant="contained" color="primary" onClick={handleOpen}>
-    //     Exam Completed
-    //   </Button>
-    //   <Dialog open={openComplete} onClose={handleClose}>
-    //     <DialogTitle>Exam Completed</DialogTitle>
-
-    //     <DialogContent>
-    //       <p>Congratulations, you have completed the exam!</p>
-    //       <p>Here are your results:</p>
-    //       <ul>
-    //         <li>
-    //           Correct Answers: {correct}/{correct + wrong + skipped}
-    //         </li>
-    //         <li>
-    //           Wrong Answers: {wrong}/{correct + wrong + skipped}
-    //         </li>
-    //         <li>
-    //           Skipped Questions: {skipped}/{correct + wrong + skipped}
-    //         </li>
-    //       </ul>
-    //     </DialogContent>
-
-    //     <DialogActions>
-    //       <Button onClick={handleClose} color="primary">
-    //         OK
-    //       </Button>
-    //     </DialogActions>
-    //   </Dialog>
-    // </div>
   );
 }
 

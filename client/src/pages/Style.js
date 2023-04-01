@@ -9,9 +9,10 @@ const useStyles = styled({
   homeContent: {
     // flex: "1",
     flexDirection: { xs: "column-reverse", md: "row" },
-    width: "100vw",
-    height: { xs: "fit-content", md: "70vh" },
-    margin: "102px 0px 20px",
+    width: { xs: "95vw", lg: "80vw" },
+    height: { xs: "fit-content", md: "60vh" },
+    margin: { xs: "80px auto 20px", lg: "80px auto 70px" },
+    // border: "3px solid green",
   },
   homeTextContainer: {
     flex: 5,
@@ -21,7 +22,7 @@ const useStyles = styled({
   homeTextCotent: {
     justifyContent: "center",
     alignItems: "start",
-    margin: { xs: "0px 30px 30px", md: "50px 0px 50px 50px" },
+    margin: { xs: "0px 30px 30px", md: "0px" },
     gap: "30px",
   },
   medicalText: {
@@ -46,6 +47,7 @@ const useStyles = styled({
     letterSpacing: "0.07em",
 
     color: "black",
+    // width: { xs: "90%", sm: "80%", md: "90%", lg: "70%" },
   },
   getStartButton: {
     border: "2px solid #00B5BE",
@@ -95,7 +97,9 @@ const useStyles = styled({
   },
   homeImage: {
     objectFit: "contain",
-    width: { xs: "100%", sm: "100%", md: "100%", lg: "700px" },
+    width: { xs: "90%", sm: "90%", md: "90%", lg: "600px" },
+    height: "100%",
+    margin: { xs: "30px 0px", md: "0" },
   },
 });
 

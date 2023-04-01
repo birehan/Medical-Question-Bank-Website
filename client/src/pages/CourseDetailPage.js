@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 import Search from "../components/Search.js";
 import { useDispatch } from "react-redux";
-import { getCourses, cleanUp } from "../features/courses/actions/courses";
+import { getCourseById, cleanUp } from "../features/courses/actions/courses";
 import { useParams } from "react-router-dom";
 import QuestionsList from "../features/questionsets/components/QuestionsList.js";
 import Footer from "../components/Footer.js";
@@ -19,13 +19,14 @@ import UnitFilterDropDown from "../features/questionsets/components/UnitFilterDr
 const CourseDetailPage = () => {
   const { id } = useParams();
   const { questions } = useSelector((state) => state.questions);
-  const { units } = useSelector((state) => state.courseDetail);
+  const { units, course } = useSelector((state) => state.courseDetail);
 
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
 
   useEffect(() => {
     if (id) {
+      dispatch(getCourseById(id));
       dispatch(getQuestionsByCourseId(id));
       dispatch(getUnits(id));
     }
@@ -59,11 +60,6 @@ const CourseDetailPage = () => {
   };
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (!courses) {
-      dispatch(getCourses());
-    }
-  }, []);
 
   useEffect(() => {
     if (success) {
@@ -135,13 +131,22 @@ const CourseDetailPage = () => {
               variant="h4"
               sx={{
                 fontWeight: "bold",
-                fontSize: "2em",
+                fontSize: { xs: "1.8rem", md: "2rem" },
+                margin: "10px 0px 20px",
+                textAlign: {
+                  xs: "center",
+                  md: "left",
+                },
               }}
             >
-              Quizzes
+              {course?.title} Quizzes
             </Typography>
             {filteredQuestions ? (
-              <QuestionsList questions={filteredQuestions} />
+              <QuestionsList
+                course={course}
+                units={units}
+                questions={filteredQuestions}
+              />
             ) : (
               ""
             )}

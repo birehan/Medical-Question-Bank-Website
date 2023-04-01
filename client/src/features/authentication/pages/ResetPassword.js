@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Stack,
@@ -9,33 +9,33 @@ import {
   Input,
   FormHelperText,
 } from "@mui/material";
-import Header from "../components/Header";
-import { useNavigate, useParams } from "react-router-dom";
-import Email from "../assets/email.svg";
+import Header from "../../../components/Header";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import Email from "../../../assets/email.svg";
 import { useForm } from "react-hook-form";
-import {
-  resetPassword,
-  cleanUp,
-} from "../features/authentication/actions/users";
+import { resetPassword, cleanUp } from "../actions/users";
 import { useSelector } from "react-redux";
 
 import { useDispatch } from "react-redux";
-import HelperText from "../components/HelperText";
+import HelperText from "../../../components/HelperText.js";
 
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const dispatch = useDispatch();
-  const [errorMessage, setErrorMessage] = useState("");
 
   const { success, message } = useSelector((state) => state.users);
 
   useEffect(() => {
-    if (success) {
+    dispatch(cleanUp());
+  }, [location, dispatch]);
+
+  useEffect(() => {
+    if (success && message === "success") {
       navigate("/login");
-      dispatch(cleanUp());
     }
-    setErrorMessage(message);
   }, [message, success]);
 
   const {
@@ -114,13 +114,18 @@ const ResetPassword = () => {
               Reset Password
             </Typography>
 
-            {errorMessage ? (
-              <Typography sx={{ color: "red" }}>{errorMessage}</Typography>
-            ) : (
-              ""
-            )}
-
             <form style={{ width: "90%" }} onSubmit={handleSubmit(onSubmit)}>
+              {message && (
+                <Typography
+                  sx={{
+                    color: "red",
+                    textAlign: "center",
+                    mb: "10px",
+                  }}
+                >
+                  {message}
+                </Typography>
+              )}
               <HelperText text="Password" />
               <FormControl variant="outlined" fullWidth>
                 <Input
@@ -131,7 +136,7 @@ const ResetPassword = () => {
                     borderRadius: "5px",
                   }}
                   disableUnderline="false"
-                  placeholder="Password"
+                  placeholder="Enter new password"
                   name="password"
                   type="password"
                   {...register("password", {

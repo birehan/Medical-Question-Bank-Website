@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Stack, Typography, Card, CardContent } from "@mui/material";
 import Header from "../components/Header";
 
-import Footer from "../components/Footer";
 import BottomCurve from "../assets/home_bottom_curve.png";
 
 import TestimonialLeftCurve from "../assets/testimonial-left-curve.png";
@@ -164,7 +163,6 @@ const TestimonialPage = () => {
                         height: { xs: "200px", md: "250px" },
                         border: "1px solid silver",
                         borderRadius: "20px",
-                        borderRadius: "20px",
                       }}
                     >
                       <img
@@ -226,7 +224,6 @@ const TestimonialPage = () => {
                 margin: "auto 0 !important",
                 borderRadius: "50%",
                 background: "white",
-                borderRadius: "50%",
                 "&:hover": {
                   cursor: "pointer",
                 },
@@ -249,7 +246,6 @@ const TestimonialPage = () => {
                 margin: "auto 0 !important",
                 borderRadius: "50%",
                 background: "white",
-                borderRadius: "50%",
                 "&:hover": {
                   cursor: "pointer",
                 },

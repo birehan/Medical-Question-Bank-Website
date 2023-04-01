@@ -66,6 +66,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         success: true,
         loading: false,
+        message: "",
         currentUser: action.payload,
       };
     case types.LOGIN_FAILED:
@@ -74,7 +75,7 @@ const userReducer = (state = initialState, action) => {
         success: false,
         loading: false,
         failed: true,
-        message: action.payload,
+        message: action.payload.toString(),
       };
     case types.GET_USER:
       return {
@@ -87,6 +88,8 @@ const userReducer = (state = initialState, action) => {
         currentUser: action.payload,
         success: true,
         loading: false,
+        failed: false,
+        message: "",
       };
     case types.CREATE_USER_FAILED:
       return {
@@ -94,7 +97,7 @@ const userReducer = (state = initialState, action) => {
         loading: false,
         success: false,
         failed: true,
-        message: action.payload,
+        message: action.payload.toString(),
       };
 
     // Update employee conditions
@@ -149,6 +152,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         success: true,
+        loading: false,
         failed: false,
         message: "",
       };
@@ -158,7 +162,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         failed: true,
-        message: action.payload,
+        message: action.payload.toString(),
       };
 
     case types.RESET_PASSWORD:
@@ -169,8 +173,9 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         success: true,
+        loading: false,
         failed: false,
-        message: "",
+        message: action.payload,
       };
 
     // Update employee conditions
@@ -178,7 +183,8 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         failed: true,
-        message: action.payload,
+        success: false,
+        message: action.payload.toString(),
       };
 
     case types.SEND_MESSAGE:
@@ -189,8 +195,9 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         success: true,
+        loading: false,
         failed: false,
-        message: action.payload,
+        message: "",
       };
 
     // Update employee conditions

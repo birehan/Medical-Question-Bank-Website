@@ -63,3 +63,9 @@ export const deleteCourse = async (id) => {
     throw error?.response?.data?.message;
   }
 };
+
+export const subscribeToCourseUpdates = () => {
+  const eventSource = new EventSource(`${url}/courses/updates`);
+
+  return eventSource;
+};

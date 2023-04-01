@@ -3,6 +3,12 @@ import axios from "axios";
 const url = "http://localhost:8080/";
 // const url = "http://192.168.241.120:8000/api/v1/";
 
+axios.defaults.withCredentials = true;
+
+const transport = axios.create({
+  withCredentials: true,
+});
+
 export const getUsers = async () => {
   try {
     const { data } = await axios.get(url + "users/");
@@ -14,11 +20,11 @@ export const getUsers = async () => {
 
 export const forgetPassword = async (email) => {
   try {
-    await axios.post(url + "forgetpassword/", email);
+    await transport.post(url + "forgetpassword/", email);
 
     return "success";
   } catch (error) {
-    throw error?.response?.data?.message;
+    throw new Error(error?.response?.data?.message);
   }
 };
 
@@ -50,12 +56,11 @@ export const createUser = async (user) => {
     const { data } = await axios.post(url + "users", user);
     return data;
   } catch (error) {
-    console.log(error);
     const message = error?.response?.data?.message;
     if (message === "email must be unique") {
-      throw "Email address already in use!";
+      throw new Error("Email address already in use!");
     } else {
-      throw "Something went wrong, Please try again.";
+      throw new Error("Something went wrong, Please try again.");
     }
   }
 };
@@ -64,7 +69,7 @@ export const sendMessage = async (message) => {
     const { data } = await axios.post(url + "sendmessage", message);
     return data;
   } catch (error) {
-    throw error?.response?.data?.message;
+    throw new Error(error?.response?.data?.message);
   }
 };
 
@@ -74,7 +79,7 @@ export const login = async (user) => {
     return data;
   } catch (error) {
     if (error.response) {
-      throw error?.response?.data?.message;
+      throw new Error(error?.response?.data?.message);
     }
   }
 };

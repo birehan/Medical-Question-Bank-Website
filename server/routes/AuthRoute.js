@@ -22,11 +22,6 @@ router.post("/sendmessage", sendMessage);
 
 router.delete("/logout", logOut);
 
-// // Route to set user password after sign up with Google
-// // app.get("/auth/set-password", setPassword);
-
-// // Route to handle user password update after sign up with Google
-// router.post("/auth/set-password", setPassword);
 
 router.get(
   "/auth/google",
@@ -56,5 +51,3 @@ router.get(
 );
 
 export default router;
-
-

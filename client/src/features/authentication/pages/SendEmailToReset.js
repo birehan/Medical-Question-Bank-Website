@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Stack,
@@ -9,32 +9,25 @@ import {
   Input,
   FormHelperText,
 } from "@mui/material";
-import Header from "../components/Header";
+import Header from "../../../components/Header";
 import { useNavigate } from "react-router-dom";
-import Email from "../assets/email.svg";
 import { useForm } from "react-hook-form";
-import {
-  forgetPassword,
-  cleanUp,
-} from "../features/authentication/actions/users";
+import { forgetPassword, cleanUp } from "../actions/users.js";
 import { useSelector } from "react-redux";
-
+import Email from "../../../assets/email.svg";
+import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-const SendMail = () => {
+const SendEmailToReset = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
 
   const { success, message } = useSelector((state) => state.users);
 
   useEffect(() => {
-    if (success) {
-      navigate("/email-sent");
-      dispatch(cleanUp());
-    }
-    setErrorMessage(message);
-  }, [message, success]);
+    dispatch(cleanUp());
+  }, [location, dispatch]);
 
   const {
     register,
@@ -47,6 +40,11 @@ const SendMail = () => {
   const onSubmit = (data) => {
     dispatch(forgetPassword(data));
   };
+  useEffect(() => {
+    if (success) {
+      navigate("/email-sent");
+    }
+  }, [success]);
 
   return (
     <Stack
@@ -106,13 +104,18 @@ const SendMail = () => {
             </Typography>
             <Typography>Enter your email and select Send Email.</Typography>
 
-            {errorMessage ? (
-              <Typography sx={{ color: "red" }}>{errorMessage}</Typography>
-            ) : (
-              ""
-            )}
-
             <form onSubmit={handleSubmit(onSubmit)}>
+              {message && (
+                <Typography
+                  sx={{
+                    color: "red",
+                    textAlign: "center",
+                    mb: "10px",
+                  }}
+                >
+                  {message}
+                </Typography>
+              )}
               <FormControl
                 variant="outlined"
                 sx={{
@@ -154,7 +157,12 @@ const SendMail = () => {
                   mt: "40px",
                 }}
               >
-                <Button sx={{ color: "#039198" }}>cancel</Button>
+                <Button
+                  sx={{ color: "#039198" }}
+                  onClick={() => navigate("/login")}
+                >
+                  cancel
+                </Button>
                 <Button
                   type="submit"
                   sx={{
@@ -178,4 +186,4 @@ const SendMail = () => {
   );
 };
 
-export default SendMail;
+export default SendEmailToReset;

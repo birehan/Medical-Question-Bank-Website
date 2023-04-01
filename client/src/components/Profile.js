@@ -1,5 +1,5 @@
 import * as React from "react";
-import Settings from "@mui/icons-material/Settings";
+// import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 
 import {
@@ -67,8 +67,6 @@ export default function Profile() {
                 opacity: "0.8",
                 color: "white",
               },
-              // fontSize: "26px !important",
-              // lineHeight: "32px",
             }}
           >
             Upload
@@ -164,7 +162,7 @@ export default function Profile() {
 
         <Divider />
 
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             handleClose();
             navigate(`/profile/${currentUser?.id}`);
@@ -174,7 +172,7 @@ export default function Profile() {
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem
           onClick={() => {
             handleClose();

@@ -89,13 +89,12 @@ body {
 
 /* header */
 
-.header {
+/* .header {
   background: linear-gradient(
     108.74deg,
     rgba(255, 255, 255, 0.24) 0%,
     rgba(255, 255, 255, 0.06) 100%
   );
-  /* box-shadow: 0px 0px 50px -25px rgba(0, 0, 0, 0.5); */
 
   box-shadow: 0px 0px 40px -25px rgba(0, 0, 0, 0.5);
 
@@ -107,17 +106,15 @@ body {
   justify-content: space-between !important;
 
   height: "100px";
-  /* width: "100vw"; */
   display: "flex";
 
-  /* padding: 10px 16px; */
   background: white;
   color: #f1f1f1;
   width: 100%;
 
   position: fixed;
   top: 0px;
-}
+} */
 .medical-title {
   font-family: "Poppins";
   font-style: normal;
@@ -145,9 +142,6 @@ body {
 .content {
   padding: 16px;
   background: white;
-}
-
-.sticky {
 }
 
 .sticky + .content {
@@ -272,7 +266,7 @@ figcaption {
   width: 100%;
   margin: 0px 0;
   padding: 5px 0;
-  color: gray;
+  color: black;
   font-size: 1em;
   display: flex;
   flex-direction: row;
@@ -288,7 +282,7 @@ figcaption {
 }
 
 .footer .row a:hover {
-  color: rgb(97, 218, 251);
+  color: #039198;
 }
 
 .footer .row ul {
@@ -298,6 +292,10 @@ figcaption {
 .footer .row ul li {
   display: inline-block;
   margin: 0px 30px;
+}
+.footer .row ul li a {
+  color: white;
+  font-weight: 500;
 }
 
 .footer .row a i {
@@ -471,12 +469,14 @@ figcaption {
   text-align: center;
   position: sticky;
   left: 0px;
-  width: 100%;
+  /* width: 100vw; */
   bottom: 0;
+  /* border: 10px solid green; */
+  /* width: 400px !important; */
 }
 
 .footer .row {
-  width: 100%;
+  /* width: 100%; */
   margin: 10px 0;
   padding: 5px 0;
   color: gray;
@@ -514,7 +514,7 @@ figcaption {
 @media (max-width: 720px) {
   .footer {
     text-align: left;
-    padding: 5%;
+    /* padding: 5%; */
   }
   .footer .row ul li {
     display: block;

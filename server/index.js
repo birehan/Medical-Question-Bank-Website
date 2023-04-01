@@ -12,9 +12,8 @@ import QuestionSetsRoute from "./routes/QuestionSetRoute.js";
 import { Users } from "./models/UserModel.js";
 import config from "config";
 import argon2 from "argon2";
-import passport from "passport";
-import { Strategy } from "passport-google-oauth20";
-const { CLIENT_ID, CLIENT_SECRET } = config.get("google");
+import passport from "./passport.js";
+
 import bodyParser from "body-parser";
 
 import path from "path";
@@ -27,7 +26,6 @@ export const __basedir = __dirname;
 const app = express();
 
 const sessionStore = SequelizeStore(session.Store);
-// const store = new sessionStore({ db: db });
 const store = new sessionStore({
   db: db,
 });
@@ -58,58 +56,8 @@ app.use(
   }
 })();
 
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: ["cyberwolve"],
-//     maxAge: 24 * 60 * 60 * 100,
-//   })
-// );
-
 app.use(passport.initialize());
 app.use(passport.session());
-
-passport.use(
-  new Strategy(
-    {
-      clientID: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
-      scope: ["profile", "email"],
-    },
-    async function (accessToken, refreshToken, profile, done) {
-      try {
-        let user = await Users.findOne({ where: { email: profile.id } });
-        // Create new user if not exists
-        const response = await Users.upsert(
-          {
-            name: user?.name || profile.displayName,
-            email: user?.email || profile.emails[0].value,
-            googleId: profile.id,
-            role: user?.role || config.get("role"),
-          },
-          {
-            where: {
-              email: profile.emails[0].value,
-            },
-          }
-        );
-        user = response[0]?.dataValues;
-        done(null, user);
-      } catch (error) {
-        done(error);
-      }
-    }
-  )
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
 
 app.use(
   cors({
@@ -138,52 +86,3 @@ const port = config.get("port") || 8080;
 app.listen(port, () => {
   console.log(`Server up and running...on ${port}`);
 });
-
-// import express from "express";
-// import bodyParser from "body-parser";
-// import multer from "multer";
-// import pdfParser from "pdf-parse";
-// import docx from "docx";
-
-// const app = express();
-
-// // configure multer storage
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage });
-
-// // configure body-parser
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-
-// // define file upload endpoint
-// app.post("/upload", upload.single("file"), (req, res) => {
-//   const file = req.file;
-
-//   // check if file is a PDF or DOCX
-//   if (file.mimetype === "application/pdf") {
-//     // extract text from PDF
-//     pdfParser(file.buffer)
-//       .then((data) => {
-//         res.json({ text: data.text });
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//         res.status(500).json({ message: "Error extracting text from PDF" });
-//       });
-//   } else if (
-//     file.mimetype ===
-//     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-//   ) {
-//     // extract text from DOCX
-//     const doc = new docx.Document(file.buffer);
-//     const text = doc.getText();
-//     res.json({ text: text });
-//   } else {
-//     res.status(400).json({ message: "File must be a PDF or DOCX" });
-//   }
-// });
-
-// // start server
-// app.listen(3000, () => {
-//   console.log("Server started on port 3000");
-// });

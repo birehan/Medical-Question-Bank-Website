@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Header from "../components/Header";
 
 import Search from "../components/Search.js";
@@ -12,13 +12,15 @@ import Loading from "../components/Loading.js";
 import Footer from "../components/Footer";
 import BottomCurve from "../assets/home_bottom_curve.png";
 
+import { getLoggedUser } from "../features/authentication/actions/users";
+
 const HomePage = () => {
   const { courses, success } = useSelector((state) => state.courses);
+  const { currentUser } = useSelector((state) => state.users);
 
   const [search, setSearch] = useState("");
 
   const handleSearch = (text) => {
-    console.log(courses);
     setSearch(text);
   };
   let filteredJobs = useMemo(() =>
@@ -34,6 +36,9 @@ const HomePage = () => {
     if (!courses) {
       dispatch(getCourses());
     }
+    if (!currentUser) {
+      dispatch(getLoggedUser());
+    }
   }, []);
 
   useEffect(() => {
@@ -48,7 +53,6 @@ const HomePage = () => {
 
   return (
     <Box
-      className="home-container"
       sx={{
         backgroundColor: "#f6f9fa !important",
         minHeight: "100vh",
@@ -60,19 +64,21 @@ const HomePage = () => {
         sx={{
           borderColor: "#f6f9fa !important",
           backgroundColor: "#f6f9fa !important",
-          marginTop: "100px",
+          marginTop: "80px",
         }}
       >
         <Stack
           sx={{
             overflow: "auto",
-            padding: "20px 20px 50px",
+            padding: "0px 30px 0px",
             gap: "20px",
-            width: { xs: "90vw", md: "85vw", lg: "80vw" },
-            margin: "0px auto",
+            width: { xs: "85vw", md: "85vw", lg: "80vw" },
+            margin: "auto auto auto",
           }}
         >
-          <Search handleSearch={handleSearch} helperText="Search a course" />
+          <Box sx={{ mt: "20px" }}>
+            <Search handleSearch={handleSearch} helperText="Search a course" />
+          </Box>
           <CourseList filteredJobs={filteredJobs} />
         </Stack>
       </Box>
@@ -93,7 +99,9 @@ const HomePage = () => {
         alt="curve"
         src={BottomCurve}
       ></Box>
-      <Footer />
+      <Box sx={{ mt: "20px" }}>
+        <Footer />
+      </Box>
     </Box>
   );
 };

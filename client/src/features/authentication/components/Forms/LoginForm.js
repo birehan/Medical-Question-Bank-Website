@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Stack,
@@ -10,20 +10,25 @@ import {
   Box,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { loginUser, getLoggedUser } from "../../actions/users.js";
+import { loginUser, cleanUp } from "../../actions/users.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import useStyles from "./Style.js";
 import GoogleIcon from "../../../../assets/google.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import HelperText from "../../../../components/HelperText.js";
 
 const LoginForm = () => {
-  const [googleCalled, setGoogleCalled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { message } = useSelector((state) => state.users);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(cleanUp());
+  }, [location, dispatch]);
+
   const {
     register,
     handleSubmit,
@@ -43,18 +48,22 @@ const LoginForm = () => {
 
   const googleAuth = async () => {
     window.open(`http://localhost:8080/auth/google/callback`, "_self");
-    setGoogleCalled(true);
   };
-
-  useEffect(() => {
-    if (googleCalled) {
-      dispatch(getLoggedUser());
-    }
-  }, [googleCalled]);
 
   return (
     <Stack sx={{ width: "100%", gap: "10px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        {message && (
+          <Typography
+            sx={{
+              color: "red",
+              textAlign: "center",
+              mb: "10px",
+            }}
+          >
+            {message}
+          </Typography>
+        )}
         {/* email field start */}
         <HelperText text="Email" />
         <FormControl variant="outlined" fullWidth>

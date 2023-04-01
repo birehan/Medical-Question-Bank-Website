@@ -9,22 +9,33 @@ const Footer = () => {
     <footer>
       <div className="footer">
         <div className="row">
-          <a href="https://www.facebook.com/" rel="noreferrer" target="_blank">
+          <a
+            href="https://www.facebook.com/profile.php?id=100091143340455"
+            rel="noreferrer"
+            target="_blank"
+          >
             <i className="fa fa-facebook"></i>
           </a>
           <a
-            href="https://www.instagram.com/medical_question_bank_et"
+            href="https://www.instagram.com/medquizet/"
             target="_blank"
             rel="noreferrer"
           >
             <i className="fa fa-instagram"></i>
           </a>
           <a
-            href="https://t.me/+HonxuA44U_IxY2Jk"
+            href="https://t.me/+ufngMaoLOkZkNDQ0"
             target="_blank"
             rel="noreferrer"
           >
             <i className="fa fa-telegram"></i>
+          </a>
+          <a
+            href="https://www.youtube.com/channel/UCnXo8DHlGvdMFZsGDh3Sqfw"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <i className="fa fa-youtube"></i>
           </a>
         </div>
 
@@ -58,7 +69,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="row">
+        <div className="row" style={{ color: "black", marginLeft: "10px" }}>
           Copyright © 2022 || Designed By:{" "}
           <a target="_blank" rel="noreferrer" href="https://birehan.com">
             Birehan Anteneh

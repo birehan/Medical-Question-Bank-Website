@@ -21,5 +21,6 @@
     "CLIENT_SECRET": "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",
     "CLIENT_URL": "http://localhost:3000"
   },
-  "role": "user"
+  "role": "user",
+  "CLIENT_URL": "http://localhost:3000"
 }

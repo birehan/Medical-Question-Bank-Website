@@ -4,6 +4,9 @@ import nodemailer from "nodemailer";
 import crypto from "crypto";
 
 import Sequelize from "sequelize";
+import config from "config";
+const CLIENT_URL = config.get("CLIENT_URL");
+
 const op = Sequelize.Op;
 
 const transporter = nodemailer.createTransport({
@@ -57,6 +60,7 @@ export const Me = async (req, res) => {
 };
 
 export const logOut = async (req, res) => {
+  req.logout();
   req.session.destroy((err) => {
     if (err) return res.status(400).json({ message: "can not logout" });
     res.status(200).json({ message: "success" });
@@ -76,9 +80,7 @@ export const setPassword = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(400).json({ message: error });
-    // res.redirect("/auth/set-password");
   }
-  // res.render("set-password", { user: req.user });
 };
 
 // Route to handle forgot password submission
@@ -188,7 +190,10 @@ export const forgetPassword = async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-    res.send({ message: "success" });
+    res.send({ message: "Message sent succssfully" });
+    // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    // res.setHeader("Access-Control-Allow-Credentials", true);
+    // res.redirect(`http://localhost:3000/email-sent`);
   } catch (error) {
     res.status(404).send({
       message:
@@ -202,7 +207,6 @@ export const forgetPassword = async (req, res) => {
 // Route to handle reset password page
 
 export const resetPassword = async (req, res) => {
-  console.log("hello world");
   try {
     const token = req.params.token;
     const user = await Users.findOne({
@@ -218,7 +222,6 @@ export const resetPassword = async (req, res) => {
 
     res.redirect(`http://localhost:3000/reset-password/${token}`);
   } catch (error) {
-    console.error("error: ", error);
     res.send({
       message:
         "An error occurred while processing your request. Please try again.",
@@ -268,7 +271,6 @@ export const sendMessage = async (req, res) => {
       res.status(422).json({ status: 422, message: "fill all the details" });
       return;
     }
-
     const mailOptions = {
       to: "tsegawmolla@medquizet.com",
       from: `'Message from ${username}' <${email}>`,

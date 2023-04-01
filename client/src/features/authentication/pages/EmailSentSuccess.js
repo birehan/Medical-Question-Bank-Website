@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Stack, Button, Card, Typography } from "@mui/material";
-import Header from "../components/Header";
+import Header from "../../../components/Header";
 import { useNavigate } from "react-router-dom";
-import Email from "../assets/email.svg";
+import Email from "../../../assets/email.svg";
 
-import { useDispatch } from "react-redux";
-
-const EmailSent = () => {
+const EmailSentSuccess = () => {
   const navigate = useNavigate();
 
   return (
@@ -89,4 +87,4 @@ const EmailSent = () => {
   );
 };
 
-export default EmailSent;
+export default EmailSentSuccess;

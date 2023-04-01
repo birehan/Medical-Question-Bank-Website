@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Stack, Box, Typography, Button } from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 import Header from "../components/Header.js";
 import { useSelector } from "react-redux";
 
@@ -24,7 +24,7 @@ const QuizPage = () => {
 
   useEffect(() => {
     dispatch(getQuestionsById(id));
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
     let states = [];
@@ -40,8 +40,6 @@ const QuizPage = () => {
     setQuestionStates(states);
   }, [questionSets]);
 
-  const { courses, success } = useSelector((state) => state.courses);
-
   return (
     <Stack
       sx={{
@@ -49,7 +47,6 @@ const QuizPage = () => {
         height: "fit-content",
         width: "100vw",
         backgroundColor: "#f6f9fa !important",
-        width: "100%",
       }}
     >
       <Header />
@@ -75,8 +72,6 @@ const QuizPage = () => {
               margin: { xs: "50px 0px 10px", lg: "50px 0px" },
               overflow: "auto",
               gap: "20px",
-              //   flex: 1,
-              overflow: "auto",
             }}
           >
             <Stack

@@ -3,7 +3,7 @@ import QuestionSetCard from "./QuestionSetCard";
 import { Stack, Box, Typography, Pagination } from "@mui/material";
 import Loader from "../../../components/Loader";
 
-const QuestionsList = ({ questions }) => {
+const QuestionsList = ({ questions, course }) => {
   const [curPage, setCurPage] = useState(1);
   const [lengthChange, setLengthChange] = useState(questions?.length);
   const exercisePerPage = 9;
@@ -42,7 +42,6 @@ const QuestionsList = ({ questions }) => {
           flexDirection: "row",
           flexWrap: "wrap",
           gap: { xs: "20px", lg: "40px" },
-          // border: "1px solid green",
           justifyContent: "center",
         }}
       >

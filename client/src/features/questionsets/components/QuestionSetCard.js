@@ -17,7 +17,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { updateLikes } from "../actions/questions";
@@ -61,6 +60,7 @@ const QuestionSetCard = ({ questionSet }) => {
         border: "none !important",
         background: "white",
         borderRadius: "10px",
+        // flex: 1,
       }}
     >
       {openQuestionDetail ? (
