@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import {
   Button,
@@ -6,13 +6,17 @@ import {
   FormHelperText,
   Input,
   FormControl,
+  Typography,
 } from "@mui/material";
 
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import useStyles from "../../authentication/components/Forms/Style.js";
-import {  createUnit, updateUnit } from "../actions/units.js";
+import { createUnit, updateUnit } from "../actions/units.js";
 import HelperText from "../../../components/HelperText.js";
+import { useSelector } from "react-redux";
+import { cleanUp } from "../../courses/actions/courses.js";
+import { useLocation } from "react-router-dom";
 
 const UnitForm = ({
   courseId,
@@ -23,7 +27,9 @@ const UnitForm = ({
   setSelectedUnit,
 }) => {
   const dispatch = useDispatch();
-  
+
+  const { message, success } = useSelector((state) => state.courses);
+
   const {
     register,
     handleSubmit,
@@ -44,20 +50,31 @@ const UnitForm = ({
     } else {
       dispatch(createUnit(newUnit));
     }
-    setIsUpdate(false);
-    setOpenUnitForm(false);
-    setSelectedUnit("");
   };
 
-  // useEffect(() => {
-  //   if (success === true) {
-  //     navigate("/home");
-  //     dispatch(cleanUp());
-  //   }
-  // }, [success]);
+  useEffect(() => {
+    if (success) {
+      setIsUpdate(false);
+      setOpenUnitForm(false);
+      setSelectedUnit("");
+      dispatch(cleanUp());
+    }
+  }, [success]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {message && (
+        <Typography
+          sx={{
+            color: "red",
+            textAlign: "center",
+            mt: "10px",
+          }}
+        >
+          {message}
+        </Typography>
+      )}
+
       <Stack sx={{ gap: "20px", margin: "20px 0" }}>
         <Stack>
           <HelperText text="Unit title" />

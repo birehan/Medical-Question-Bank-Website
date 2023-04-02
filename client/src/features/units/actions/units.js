@@ -1,5 +1,9 @@
 import * as constants from "../../../constants/unitActionTypes.js";
 
+export const getAllUnits = () => {
+  return { type: constants.GET_ALL_UNITS };
+};
+
 export const getUnits = (courseId) => {
   return { type: constants.GET_UNITS, payload: courseId };
 };

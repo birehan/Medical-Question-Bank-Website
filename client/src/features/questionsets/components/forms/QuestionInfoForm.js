@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
-  Button,
   Stack,
   Box,
   Typography,
@@ -18,27 +17,34 @@ import RectangleIcon from "@mui/icons-material/Rectangle";
 import Select from "@mui/material/Select";
 import { useSelector } from "react-redux";
 import TimeForm from "./TimeForm";
-import { getUnits } from "../../../units/actions/units";
+import { getAllUnits } from "../../../units/actions/units";
+import { getCourses } from "../../../courses/actions/courses";
 import { useDispatch } from "react-redux";
 import HelperText from "../../../../components/HelperText";
 
-const QuestionInfoForm = ({ register, errors }) => {
+const QuestionInfoForm = ({ register, errors, watch }) => {
   const dispatch = useDispatch();
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm({
-  //   defaultValues: {
-  //     hour: 0,
-  //     minute: 0,
-  //     second: 0,
-  //   },
-  // });
-  console.log("info: ", register.questions);
-  const { courses } = useSelector((state) => state.courses);
-  const { units } = useSelector((state) => state.courseDetail);
+  const { courses, units } = useSelector((state) => state.courses);
+
+  useEffect(() => {
+    if (!courses || !units) {
+      dispatch(getCourses());
+      dispatch(getAllUnits());
+    }
+  }, []);
+
+  const [selectedCourseId, setselectedCourseId] = useState(
+    watch(`courseId`) || courses[0]?.id
+  );
+
+  const [courseUnits, setcourseUnits] = useState(
+    units.filter((unit) => unit?.courseId === selectedCourseId)
+  );
+
+  useEffect(() => {
+    setcourseUnits(units.filter((unit) => unit?.courseId === selectedCourseId));
+  }, [units, selectedCourseId]);
 
   return (
     <Stack
@@ -130,11 +136,12 @@ const QuestionInfoForm = ({ register, errors }) => {
                 displayEmpty
                 id="demo-simple-select"
                 value={register.courseId}
-                defaultValue={courses?.[0]?.id}
+                defaultValue={watch(`courseId`) || courses?.[0]?.id}
                 {...register("courseId", {
                   required: "Course is required",
                   onChange: (event) => {
-                    dispatch(getUnits(event.target.value));
+                    // dispatch(getUnits(event.target.value));
+                    setselectedCourseId(event.target.value);
                   },
                 })}
                 sx={{
@@ -168,6 +175,7 @@ const QuestionInfoForm = ({ register, errors }) => {
                 displayEmpty
                 id="demo-simple-select"
                 value={register.unitId}
+                defaultValue={watch(`unitId`) || courseUnits?.[0]?.id}
                 {...register("unitId", {
                   required: "Unit is required",
                 })}
@@ -177,8 +185,8 @@ const QuestionInfoForm = ({ register, errors }) => {
                   mt: "15px",
                 }}
               >
-                {units
-                  ? units?.map((unit, index) => {
+                {courseUnits
+                  ? courseUnits?.map((unit, index) => {
                       return (
                         <MenuItem value={unit?.id} key={index}>
                           {unit?.title}

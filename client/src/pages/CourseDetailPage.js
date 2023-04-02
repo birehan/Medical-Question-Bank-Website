@@ -19,20 +19,33 @@ import UnitFilterDropDown from "../features/questionsets/components/UnitFilterDr
 const CourseDetailPage = () => {
   const { id } = useParams();
   const { questions } = useSelector((state) => state.questions);
-  const { units, course } = useSelector((state) => state.courseDetail);
+  const { courses, success, units } = useSelector((state) => state.courses);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [courseUnits, setCourseUnits] = useState([]);
 
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
 
   useEffect(() => {
     if (id) {
-      dispatch(getCourseById(id));
       dispatch(getQuestionsByCourseId(id));
-      dispatch(getUnits(id));
+      if (courses) {
+        const course = courses.filter(
+          (course) => parseInt(course?.id) === parseInt(id)
+        );
+        if (course) {
+          setSelectedCourse(course[0]);
+        }
+      }
+      if (units) {
+        setCourseUnits(
+          units.filter((unit) => parseInt(unit?.courseId) === parseInt(id))
+        );
+      }
     }
   }, [id]);
 
-  const { courses, success } = useSelector((state) => state.courses);
+  // const { courses, success } = useSelector((state) => state.courses);
 
   const [search, setSearch] = useState("");
   const [filterUnit, setfilterUnit] = useState("");
@@ -121,7 +134,7 @@ const CourseDetailPage = () => {
                 <UnitFilterDropDown
                   filterUnit={filterUnit}
                   setfilterUnit={setfilterUnit}
-                  units={units}
+                  units={courseUnits}
                 />
               ) : (
                 ""
@@ -139,12 +152,12 @@ const CourseDetailPage = () => {
                 },
               }}
             >
-              {course?.title} Quizzes
+              {selectedCourse?.title} Quizzes
             </Typography>
             {filteredQuestions ? (
               <QuestionsList
-                course={course}
-                units={units}
+                course={selectedCourse}
+                units={courseUnits}
                 questions={filteredQuestions}
               />
             ) : (
@@ -159,6 +172,7 @@ const CourseDetailPage = () => {
             position: "relative",
             background: "white",
             padding: { xs: "0", lg: "30px 50px 20px 50px" },
+            mt: { xs: "0", lg: "-20px" },
           }}
         >
           <Stack
@@ -174,7 +188,7 @@ const CourseDetailPage = () => {
               <UnitFilter
                 filterUnit={filterUnit}
                 setfilterUnit={setfilterUnit}
-                units={units}
+                units={courseUnits}
               />
             )}
           </Stack>

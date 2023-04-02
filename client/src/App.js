@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -25,7 +25,42 @@ import ContactPage from "./pages/ContactPage";
 
 import QuestionExtractor from "./features/questionsets/components/QuestionExtractor";
 
+import { useDispatch } from "react-redux";
+import { getCourses } from "./features/courses/actions/courses";
+import { getAllUnits } from "./features/units/actions/units";
+import { getLoggedUser } from "./features/authentication/actions/users";
+
 const App = () => {
+  const { courses, units } = useSelector((state) => state.courses);
+  const dispatch = useDispatch();
+
+  const hasFetchedData = localStorage.getItem("hasFetchedData");
+
+  useEffect(() => {
+    if (!hasFetchedData || !courses || !units) {
+      dispatch(getCourses());
+      dispatch(getAllUnits());
+
+      localStorage.setItem("hasFetchedData", true);
+      localStorage.setItem("lastFetchedTime", new Date().getTime());
+    }
+    if (courses && hasFetchedData) {
+      const now = new Date().getTime();
+      const twentyFourHoursInMs = 1 * 60 * 60 * 1000;
+      const lastFetchedTime = localStorage.getItem("lastFetchedTime");
+
+      if (lastFetchedTime && now - lastFetchedTime > twentyFourHoursInMs) {
+        dispatch(getCourses());
+        dispatch(getAllUnits());
+        localStorage.setItem("hasFetchedData", true);
+        localStorage.setItem("lastFetchedTime", new Date().getTime());
+      }
+    }
+    if (!currentUser) {
+      dispatch(getLoggedUser());
+    }
+  }, []);
+
   const { currentUser } = useSelector((state) => state.users);
 
   return (

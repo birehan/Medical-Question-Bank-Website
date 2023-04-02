@@ -19,7 +19,7 @@ const TimeForm = ({ register, errors }) => {
             placeholder="0"
             type="tel"
             {...register("duration.hour", {
-              required: "Set is required",
+              required: "duration hour is required",
             })}
             error={Boolean(errors?.duration?.hour)}
             value={register?.duration?.hour}
@@ -61,7 +61,7 @@ const TimeForm = ({ register, errors }) => {
             disableUnderline
             //   sx={{ width: "100px" }}
             placeholder="0"
-            type="tel"
+            type="number"
             {...register("duration.second", {
               required: "second is required",
             })}

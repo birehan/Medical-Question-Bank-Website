@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Stack, Typography, Avatar, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import QuestionError from "../QuestionError";
 
 const QuestionsSections = ({
   fields,
@@ -12,7 +13,6 @@ const QuestionsSections = ({
   selectedQuestion,
   setSelectedQuestion,
 }) => {
-  console.log("register: ", register);
   return (
     <Stack sx={{ padding: "20px", gap: "20px" }}>
       <Stack
@@ -41,7 +41,7 @@ const QuestionsSections = ({
               title: "",
               choices: [{ id: 0, value: "" }],
               answer: "",
-              explanation: "",
+              explanation: "No explanation",
             });
           }}
         >
@@ -111,6 +111,12 @@ const QuestionsSections = ({
       >
         Save
       </Button>
+
+      <QuestionError
+        errors={errors}
+        selectedQuestion={selectedQuestion}
+        setSelectedQuestion={setSelectedQuestion}
+      />
     </Stack>
   );
 };

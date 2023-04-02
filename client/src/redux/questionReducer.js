@@ -63,9 +63,10 @@ const questionReducer = (state = initialState, action) => {
     case types.CREATE_QUESTIONS_SUCCESS:
       return {
         ...state,
-        questions: [...state.questions, action.payload],
+        questions: [action.payload, ...state.questions],
         loading: false,
         success: true,
+        message: "created",
       };
     case types.CREATE_QUESTIONS_FAILED:
       return {
@@ -89,6 +90,7 @@ const questionReducer = (state = initialState, action) => {
         ),
         loading: false,
         success: true,
+        message: "updated",
       };
     case types.UPDATE_QUESTIONS_FAILED:
       return {
@@ -105,10 +107,12 @@ const questionReducer = (state = initialState, action) => {
         loading: true,
       };
     case types.DELETE_QUESTIONS_SUCCESS:
+      console.log(state?.questions);
+      console.log(action.payload);
       return {
         ...state,
         questions: state?.questions?.filter(
-          (question) => question?.id !== action?.payload?.id
+          (question) => parseInt(question?.id) !== parseInt(action?.payload)
         ),
         loading: false,
         success: true,
@@ -154,6 +158,7 @@ const questionReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         success: false,
+        message: "",
       };
 
     default:

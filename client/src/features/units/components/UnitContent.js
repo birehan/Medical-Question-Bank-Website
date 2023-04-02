@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Stack,
@@ -12,23 +12,44 @@ import AddIcon from "@mui/icons-material/Add";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { getUnits } from "../actions/units.js";
+import { getUnits, getAllUnits } from "../actions/units.js";
+import { getCourses } from "../../courses/actions/courses.js";
 import HelperText from "../../../components/HelperText.js";
 import Select from "@mui/material/Select";
 import UnitForm from "./UnitForm.js";
 import UnitMore from "./UnitMore.js";
 
 const UnitContent = () => {
-  const { courses } = useSelector((state) => state.courses);
-  const { units } = useSelector((state) => state.courseDetail);
+  const { courses, units } = useSelector((state) => state.courses);
 
-  const [selectedCourseId, setselectedCourseId] = useState(courses[0]?.id);
+  useEffect(() => {
+    if (!courses || !units) {
+      dispatch(getCourses());
+      dispatch(getAllUnits());
+    }
+  }, []);
+
+  // const { units } = useSelector((state) => state.courseDetail);
+
+  const [selectedCourseId,setselectedCourseId ] = useState(courses[0]?.id);
+
+  const [courseUnits, setcourseUnits] = useState(
+    units.filter((unit) => unit?.courseId === selectedCourseId)
+  );
   const [openUnitForm, setOpenUnitForm] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
 
   const [selectedUnit, setSelectedUnit] = useState("");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setcourseUnits(units.filter((unit) => unit?.courseId === selectedCourseId));
+  }, [units, selectedCourseId]);
+
+  const handleCourseChange = (courseId) => {
+    setselectedCourseId(courseId);
+  };
 
   return (
     <Stack sx={{ padding: { xs: "20px", md: "50px" } }}>
@@ -72,8 +93,8 @@ const UnitContent = () => {
               value={selectedCourseId}
               defaultValue={courses?.[0]?.id}
               onChange={(event) => {
-                dispatch(getUnits(event.target.value));
-                setselectedCourseId(event.target.value);
+                // dispatch(getUnits(event.target.value));
+                handleCourseChange(event.target.value);
                 setSelectedUnit("");
               }}
               sx={{
@@ -105,6 +126,7 @@ const UnitContent = () => {
                 value={selectedUnit}
                 onChange={(event) => {
                   setSelectedUnit(event.target.value);
+                  setOpenUnitForm(false);
                 }}
                 sx={{
                   background: "#f6f9fa",
@@ -112,8 +134,8 @@ const UnitContent = () => {
                   mt: "15px",
                 }}
               >
-                {units
-                  ? units?.map((unit, index) => {
+                {courseUnits
+                  ? courseUnits?.map((unit, index) => {
                       return (
                         <MenuItem value={unit} key={index}>
                           {unit?.title}

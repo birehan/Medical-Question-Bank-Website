@@ -6,6 +6,7 @@ import Search from "../components/Search.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getCourses, cleanUp } from "../features/courses/actions/courses";
+import { getAllUnits } from "../features/units/actions/units";
 
 import CourseList from "../features/courses/components/CourseList";
 import Loading from "../components/Loading.js";
@@ -32,14 +33,33 @@ const HomePage = () => {
   );
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (!courses) {
-      dispatch(getCourses());
-    }
-    if (!currentUser) {
-      dispatch(getLoggedUser());
-    }
-  }, []);
+
+  // const hasFetchedData = localStorage.getItem("hasFetchedData");
+
+  // useEffect(() => {
+  //   if (!hasFetchedData || !courses) {
+  //     dispatch(getCourses());
+  //     dispatch(getAllUnits());
+
+  //     localStorage.setItem("hasFetchedData", true);
+  //     localStorage.setItem("lastFetchedTime", new Date().getTime());
+  //   }
+  //   if (courses && hasFetchedData) {
+  //     const now = new Date().getTime();
+  //     const twentyFourHoursInMs = 1 * 60 * 60 * 1000;
+  //     const lastFetchedTime = localStorage.getItem("lastFetchedTime");
+
+  //     if (lastFetchedTime && now - lastFetchedTime > twentyFourHoursInMs) {
+  //       dispatch(getCourses());
+  //       dispatch(getAllUnits());
+  //       localStorage.setItem("hasFetchedData", true);
+  //       localStorage.setItem("lastFetchedTime", new Date().getTime());
+  //     }
+  //   }
+  //   if (!currentUser) {
+  //     dispatch(getLoggedUser());
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (success) {

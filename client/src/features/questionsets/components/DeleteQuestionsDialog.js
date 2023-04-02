@@ -10,18 +10,21 @@ import {
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
-import { deleteCourse } from "../actions/courses";
 import { useDispatch } from "react-redux";
+import { deleteQuestions } from "../actions/questions";
 
-const DeleteCourse = ({ openDeleteCourse, setOpenDeleteCourse, course }) => {
+const DeleteQuestionSet = ({
+  openDeleteQuestions,
+  setOpenDeleteQuestions,
+  questionSet,
+}) => {
   const dispatch = useDispatch();
-  console.log("course: ", course);
 
   return (
     <div>
       <Dialog
-        open={openDeleteCourse}
-        onClose={() => setOpenDeleteCourse(false)}
+        open={openDeleteQuestions}
+        onClose={() => setOpenDeleteQuestions(false)}
       >
         <DialogTitle>
           <Typography
@@ -31,11 +34,11 @@ const DeleteCourse = ({ openDeleteCourse, setOpenDeleteCourse, course }) => {
               fontWeight: "550",
             }}
           >
-            Delete Course {course.title}
+            Delete Question set
           </Typography>
           <IconButton
             aria-label="close"
-            onClick={() => setOpenDeleteCourse(false)}
+            onClick={() => setOpenDeleteQuestions(false)}
             sx={{ position: "absolute", right: 8, top: 8 }}
           >
             <CloseIcon color="white" />
@@ -52,15 +55,14 @@ const DeleteCourse = ({ openDeleteCourse, setOpenDeleteCourse, course }) => {
           }}
         >
           <Typography sx={{ color: "red" }}>
-            Are you sure to delete this course. Note all questions under this
-            course also will be deleted.
+            Are you sure to delete question set{" "}
           </Typography>
+          <p style={{ color: "black" }}>{questionSet?.title}</p>
 
           <Button
             onClick={() => {
-              console.log("id: ", course?.id);
-              dispatch(deleteCourse(course?.id));
-              setOpenDeleteCourse(false);
+              dispatch(deleteQuestions(questionSet?.id));
+              setOpenDeleteQuestions(false);
             }}
             className="login-submit"
             sx={{
@@ -80,7 +82,7 @@ const DeleteCourse = ({ openDeleteCourse, setOpenDeleteCourse, course }) => {
               },
             }}
           >
-            Delete Course
+            Delete Question Set
           </Button>
         </DialogContent>
       </Dialog>
@@ -88,4 +90,4 @@ const DeleteCourse = ({ openDeleteCourse, setOpenDeleteCourse, course }) => {
   );
 };
 
-export default DeleteCourse;
+export default DeleteQuestionSet;

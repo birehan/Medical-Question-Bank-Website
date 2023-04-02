@@ -20,11 +20,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { updateLikes } from "../actions/questions";
+import { useNavigate } from "react-router-dom";
+import DeleteQuestionSet from "./DeleteQuestionsDialog";
 
 const QuestionSetCard = ({ questionSet }) => {
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.users);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [openDeleteQuestions, setOpenDeleteQuestions] = React.useState(false);
 
   const dispatch = useDispatch();
 
@@ -63,6 +67,16 @@ const QuestionSetCard = ({ questionSet }) => {
         // flex: 1,
       }}
     >
+      {openDeleteQuestions && currentUser?.role === "admin" ? (
+        <DeleteQuestionSet
+          openDeleteQuestions={openDeleteQuestions}
+          setOpenDeleteQuestions={setOpenDeleteQuestions}
+          questionSet={questionSet}
+        />
+      ) : (
+        ""
+      )}
+
       {openQuestionDetail ? (
         <QuestionDetail
           openQuestionDetail={openQuestionDetail}
@@ -192,7 +206,9 @@ const QuestionSetCard = ({ questionSet }) => {
 
         <MenuItem
           onClick={() => {
-            // navigate(`/course/crud`, { state: { course: course?.course } });
+            navigate(`/questions/crud`, {
+              state: { questionSet: questionSet },
+            });
             handleClose();
           }}
         >
@@ -203,7 +219,7 @@ const QuestionSetCard = ({ questionSet }) => {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            // setOpenDeleteCourse(true);
+            setOpenDeleteQuestions(true);
             handleClose();
           }}
         >

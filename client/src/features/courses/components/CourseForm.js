@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import useStyles from "../../authentication/components/Forms/Style.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { cleanUp, createCourse, updateCourse } from "../actions/courses.js";
 import HelperText from "../../../components/HelperText.js";
 
@@ -22,9 +22,18 @@ const CourseForm = ({ course }) => {
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState("");
   const navigate = useNavigate();
+  const [fileError, setfileError] = useState("");
+  const location = useLocation();
+
+  // console.log("fileError: ", fileError);
 
   const { message, success } = useSelector((state) => state.courses);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(cleanUp());
+  }, [location, dispatch]);
+
   const {
     register,
     handleSubmit,
@@ -37,6 +46,12 @@ const CourseForm = ({ course }) => {
   });
 
   const onSubmit = (data) => {
+    if (!image && !course) {
+      setfileError("Course image is required");
+      console.log("fileError: ", fileError);
+
+      return;
+    }
     const formData = new FormData();
     formData.append("id", course?.id);
     formData.append("title", data.title);
@@ -59,12 +74,6 @@ const CourseForm = ({ course }) => {
 
   return (
     <Stack sx={{ padding: { xs: "20px", md: "50px" } }}>
-      {/* {message ? (
-        <Typography sx={{ color: "red", textAlign: "center" }}>
-          {message}
-      ) : (
-        ""
-      )} */}
       <Typography
         sx={{
           textAlign: "center",
@@ -76,7 +85,18 @@ const CourseForm = ({ course }) => {
       </Typography>
       <Divider />
 
-      <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
+      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+        {message && (
+          <Typography
+            sx={{
+              color: "red",
+              textAlign: "center",
+              mt: "10px",
+            }}
+          >
+            {message}
+          </Typography>
+        )}
         <Stack sx={{ gap: "20px" }}>
           <Stack sx={{ mt: "20px", gap: "20px" }}>
             <HelperText text={"Course Image"} />
@@ -90,6 +110,7 @@ const CourseForm = ({ course }) => {
               type="file"
               className="input"
               accept="image/*"
+              name="course image"
             />
             <label
               style={{
@@ -115,6 +136,16 @@ const CourseForm = ({ course }) => {
                 </Box>
               )}
             </label>
+            {fileError && (
+              <Typography
+                sx={{
+                  color: "red",
+                  fontSize: "0.9rem",
+                }}
+              >
+                {fileError}
+              </Typography>
+            )}
           </Stack>
 
           {/* email field start */}
@@ -125,7 +156,7 @@ const CourseForm = ({ course }) => {
                 disableUnderline
                 type={"text"}
                 sx={{
-                  m: "15px 0 !important",
+                  margin: "15px 0 !important",
                   background: "rgba(176, 186, 195, 0.19) !important",
                   padding: "10px 16px !important",
                   borderRadius: "5px",
@@ -134,6 +165,10 @@ const CourseForm = ({ course }) => {
                 name="title"
                 {...register("title", {
                   required: "Course name is required",
+                  maxLength: {
+                    value: 50,
+                    message: "course title should not exceed 50 characters",
+                  },
                 })}
                 id="outlined-basic title"
               />
@@ -158,9 +193,12 @@ const CourseForm = ({ course }) => {
                 type="text"
                 {...register("description", {
                   required: "description is required",
+                  maxLength: {
+                    value: 100,
+                    message: "description should not exceed 100 characters",
+                  },
                 })}
                 value={register.description}
-                margin="normal"
                 variant="outlined"
                 id="outlined-basic description"
                 sx={{

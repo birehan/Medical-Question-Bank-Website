@@ -75,6 +75,10 @@ const DeleteUnit = ({
               display: "block",
               marginTop: "30px",
               marginBottom: "10px",
+              "&:hover": {
+                background: "Red",
+                opacity: "0.7",
+              },
             }}
           >
             Delete Unit

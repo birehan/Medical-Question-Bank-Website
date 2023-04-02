@@ -3,6 +3,10 @@ export const GET_UNITS = "GET_UNITS";
 export const GET_UNITS_SUCCESS = "GET_UNITS_SUCCESS";
 export const GET_UNITS_FAILED = "GET_UNITS_FAILED";
 
+export const GET_ALL_UNITS = "GET_ALL_UNITS";
+export const GET_ALL_UNITS_SUCCESS = "GET_ALL_UNITS_SUCCESS";
+export const GET_ALL_UNITS_FAILED = "GET_ALL_UNITS_FAILED";
+
 // create course constants
 export const GET_UNIT_BY_ID = "GET_UNIT_BY_ID";
 export const GET_UNIT_BY_ID_SUCCESS = "GET_UNIT_BY_ID_SUCCESS";

@@ -17,6 +17,7 @@ export default function UnitFilter({ units, setfilterUnit, filterUnit }) {
       sx={{
         gap: "30px",
         width: "100%",
+        overflow: "auto",
       }}
     >
       <Stack

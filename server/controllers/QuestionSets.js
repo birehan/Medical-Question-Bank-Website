@@ -164,15 +164,18 @@ export const updateQuestionSet = async (req, res) => {
   if (error) {
     return res.status(400).send({ message: `${error.details[0].message}` });
   }
-  const { title, description, year, duration, courseId, questions } = req.body;
+  const { title, description, year, duration, courseId, questions, unitId } =
+    req.body;
   try {
     const response = await QuestionSets.update(
       {
         title,
         description,
         year,
-        duration,
+        duration: JSON.stringify(duration),
         courseId,
+        unitId,
+        questionCount: questions?.length,
       },
       {
         where: {
@@ -227,7 +230,7 @@ export const deleteQuestionSet = async (req, res) => {
         id: req.params.questionSetId,
       },
     });
-    res.status(200).json(response);
+    res.status(200).json(req.params.questionSetId);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

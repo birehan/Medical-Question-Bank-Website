@@ -24,6 +24,17 @@ export const createUnit = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const getAllUnits = async (req, res) => {
+  try {
+    let response = await Units.findAll({
+      order: [["title", "ASC"]],
+      attributes: ["id", "title", "courseId"],
+    });
+    res.status(200).json(response);
+  } catch (error) {
+  res.status(500).json({ message: error.message });
+  }
+};
 
 export const getUnits = async (req, res) => {
   const course = await Courses.findOne({
@@ -36,6 +47,8 @@ export const getUnits = async (req, res) => {
   if (!course) return res.status(404).json({ message: "Course not found" });
   try {
     let response = await Units.findAll({
+      order: [["title", "ASC"]],
+
       attributes: ["id", "title", "courseId"],
       where: {
         courseId: req.params.courseId,

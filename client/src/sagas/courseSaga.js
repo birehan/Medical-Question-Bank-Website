@@ -2,23 +2,23 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import * as types from "../constants/courseActionTypes.js";
 import * as api from "../features/courses/api/index.js";
 
-function* handleCourseUpdate(action) {
-  const updatedCourse = action.payload;
+// function* handleCourseUpdate(action) {
+//   const updatedCourse = action.payload;
 
-  if (updatedCourse.action === "create") {
-    yield put(addCourse(updatedCourse.course));
-  } else if (updatedCourse.action === "update") {
-    yield put(updateCourse(updatedCourse.course));
-  } else if (updatedCourse.action === "delete") {
-    yield put(deleteCourse(updatedCourse.course.id));
-  }
-}
+//   if (updatedCourse.action === "create") {
+//     yield put(addCourse(updatedCourse.course));
+//   } else if (updatedCourse.action === "update") {
+//     yield put(updateCourse(updatedCourse.course));
+//   } else if (updatedCourse.action === "delete") {
+//     yield put(deleteCourse(updatedCourse.course.id));
+//   }
+// }
 
-function* watchCourseUpdates() {
-  const channel = yield call(subscribeToCourseUpdates);
+// function* watchCourseUpdates() {
+//   const channel = yield call(subscribeToCourseUpdates);
 
-  yield takeEvery(channel, handleCourseUpdate);
-}
+//   yield takeEvery(channel, handleCourseUpdate);
+// }
 
 function* createCourse({ payload }) {
   try {
@@ -80,10 +80,10 @@ function* courseSaga() {
   yield takeEvery(types.CREATE_COURSE, createCourse);
   yield takeEvery(types.UPDATE_COURSE, updateCourse);
   yield takeEvery(types.DELETE_COURSE, deleteCourse);
-  yield all([watchCourseUpdates()]);
+  // yield all([watchCourseUpdates()]);
 }
 
 export default courseSaga;
 
-  You have to figure out what that rule is and choose
-   the correct number to end the sequence.
+// You have to figure out what that rule is and choose
+//  the correct number to end the sequence.

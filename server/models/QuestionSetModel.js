@@ -68,6 +68,7 @@ QuestionSets.belongsTo(Courses, { foreignKey: "courseId" });
 
 export const validateQuestionSet = (questionSet) => {
   const schema = Joi.object({
+    id: Joi.number().optional(),
     title: Joi.string().required(),
     description: Joi.string().required(),
     duration: Joi.object(),
@@ -77,7 +78,7 @@ export const validateQuestionSet = (questionSet) => {
       answer: Joi.string().required(),
       explanation: Joi.string(),
       id: Joi.number(),
-      // questionSetId: Joi.number(),
+      questionSetId: Joi.number().optional(),
     }),
     unitId: Joi.number().required(),
     courseId: Joi.number().required(),

@@ -1,8 +1,17 @@
 import * as types from "../constants/courseActionTypes.js";
 import {
-  GET_UNITS,
-  GET_UNITS_SUCCESS,
-  GET_UNITS_FAILED,
+  GET_ALL_UNITS,
+  GET_ALL_UNITS_SUCCESS,
+  GET_ALL_UNITS_FAILED,
+  CREATE_UNIT,
+  CREATE_UNIT_SUCCESS,
+  CREATE_UNIT_FAILED,
+  UPDATE_UNIT,
+  UPDATE_UNIT_SUCCESS,
+  UPDATE_UNIT_FAILED,
+  DELETE_UNIT,
+  DELETE_UNIT_SUCCESS,
+  DELETE_UNIT_FAILED,
 } from "../constants/unitActionTypes.js";
 
 const initialState = {
@@ -16,19 +25,87 @@ const initialState = {
 
 const courseReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_UNITS:
+    case GET_ALL_UNITS:
       return {
         ...state,
         loading: true,
       };
-    case GET_UNITS_SUCCESS:
+    case GET_ALL_UNITS_SUCCESS:
       return {
         ...state,
         units: action.payload,
         loading: false,
         success: true,
       };
-    case GET_UNITS_FAILED:
+    case GET_ALL_UNITS_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        message: action.payload,
+      };
+
+    // create course
+    case CREATE_UNIT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_UNIT_SUCCESS:
+      return {
+        ...state,
+        units: [action.payload, ...state.units],
+        loading: false,
+        success: true,
+      };
+    case CREATE_UNIT_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        message: action.payload,
+      };
+
+    // update course
+    case UPDATE_UNIT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_UNIT_SUCCESS:
+      return {
+        ...state,
+        loading: state.units,
+
+        units: [
+          action.payload,
+          ...state.units.filter((unit) => unit.id !== action.payload.id),
+        ],
+
+        success: state.units,
+      };
+    case UPDATE_UNIT_FAILED:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        message: action.payload,
+      };
+
+    // delete course
+    case DELETE_UNIT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_UNIT_SUCCESS:
+      return {
+        ...state,
+        units: state?.units?.filter((unit) => unit?.id !== action?.payload?.id),
+        loading: false,
+        success: true,
+      };
+    case DELETE_UNIT_FAILED:
       return {
         ...state,
         loading: false,
@@ -88,7 +165,7 @@ const courseReducer = (state = initialState, action) => {
     case types.CREATE_COURSE_SUCCESS:
       return {
         ...state,
-        courses: [...state.courses, action.payload],
+        courses: [action.payload, ...state.courses],
         loading: false,
         success: true,
       };
@@ -109,9 +186,11 @@ const courseReducer = (state = initialState, action) => {
     case types.UPDATE_COURSE_SUCCESS:
       return {
         ...state,
-        courses: state.courses.map((course) =>
-          course.id === action.payload.id ? action.payload : course
-        ),
+        courses: [
+          action.payload,
+          ...state.courses.filter((course) => course.id !== action.payload.id),
+        ],
+
         loading: false,
         success: true,
       };
@@ -150,6 +229,7 @@ const courseReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         success: false,
+        message: "",
       };
 
     default:

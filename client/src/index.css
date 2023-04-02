@@ -196,7 +196,7 @@ body {
   overflow: auto;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1200px) {
   .content-container {
     height: calc(100vh - 160px) !important;
     overflow: auto;
@@ -319,7 +319,7 @@ figcaption {
 }
 
 .filter-container {
-  max-height: calc(100vh - 350px);
+  max-height: calc(100vh - 400px);
 }
 
 ::-webkit-scrollbar-track {

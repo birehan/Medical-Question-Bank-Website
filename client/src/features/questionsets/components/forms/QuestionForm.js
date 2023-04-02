@@ -22,10 +22,14 @@ const QuestionForm = ({
   register,
   errors,
   selectedQuestion,
+  setSelectedQuestion,
+  questionLength,
   question,
   getValues,
   setValue,
   watch,
+  trigger,
+  remove: removeQuestion,
 }) => {
   // const [answer, setAnswer] = useState(null);
   // const [choices, setChoices] = useState([{ id: 0, value: "" }]);
@@ -37,6 +41,7 @@ const QuestionForm = ({
     control,
     name: `questions[${selectedQuestion}].choices`,
   });
+  // console.log(question, fields);
 
   return (
     <Stack
@@ -96,10 +101,13 @@ const QuestionForm = ({
                   append={append}
                   selectedQuestion={selectedQuestion}
                   register={register}
-                  errors={register}
+                  errors={errors}
                   getValues={getValues}
                   setValue={setValue}
                   watch={watch}
+                  question={question}
+                  trigger={trigger}
+                  control={control}
                 />
               );
             })}
@@ -137,13 +145,20 @@ const QuestionForm = ({
           }}
         >
           <Button
-            type="submit"
+            onClick={() => {
+              if (questionLength > 1) {
+                removeQuestion(selectedQuestion);
+                if (selectedQuestion != 0) {
+                  setSelectedQuestion(selectedQuestion - 1);
+                }
+              }
+            }}
             sx={{
               background: "#f6f9fa",
 
               color: "#078989",
               fontWeight: "bold",
-              mt: "30px",
+              margin: "30px auto",
               "&:hover": {
                 background: "#f6f9fa",
 

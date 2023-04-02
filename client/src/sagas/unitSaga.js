@@ -26,6 +26,18 @@ function* getUnits({ payload }) {
   }
 }
 
+function* getAllUnits() {
+  try {
+    const units = yield call(api.getAllUnits);
+    yield put({ type: types.GET_ALL_UNITS_SUCCESS, payload: units });
+  } catch (error) {
+    yield put({
+      type: types.GET_ALL_UNITS_FAILED,
+      payload: error,
+    });
+  }
+}
+
 function* getUntiById({ payload }) {
   try {
     const unit = yield call(api.getUnitById, payload);
@@ -57,6 +69,7 @@ function* deleteUnit({ payload }) {
 }
 
 function* unitSaga() {
+  yield takeEvery(types.GET_ALL_UNITS, getAllUnits);
   yield takeEvery(types.GET_UNITS, getUnits);
   yield takeEvery(types.GET_UNIT_BY_ID, getUntiById);
   yield takeEvery(types.CREATE_UNIT, createUnit);

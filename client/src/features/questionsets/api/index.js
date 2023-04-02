@@ -36,7 +36,6 @@ export const getQuestionsByCourseId = async (id) => {
 
 export const getQuestionsById = async (id) => {
   try {
-    console.log("id: ", id);
     const { data } = await axios.get(`${url}/questions/${id}`, {
       withCredentials: true,
     });

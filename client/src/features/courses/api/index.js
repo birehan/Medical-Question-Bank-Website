@@ -39,6 +39,9 @@ export const createCourse = async (formdata) => {
     const { data } = await transport.post(`${url}/courses`, formdata, config);
     return data;
   } catch (error) {
+    if (error?.message === "Network Error") {
+      throw error?.message;
+    }
     throw error?.response?.data?.message;
   }
 };
@@ -51,6 +54,9 @@ export const updateCourse = async (course) => {
     );
     return data;
   } catch (error) {
+    if (error?.message === "Network Error") {
+      throw error?.message;
+    }
     throw error?.response?.data?.message;
   }
 };
@@ -60,6 +66,9 @@ export const deleteCourse = async (id) => {
     const { data } = await axios.delete(`${url}/course/${id}/`);
     return data;
   } catch (error) {
+    if (error?.message === "Network Error") {
+      throw error?.message;
+    }
     throw error?.response?.data?.message;
   }
 };

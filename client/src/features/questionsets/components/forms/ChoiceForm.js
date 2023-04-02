@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
-import { Button, Stack, Input } from "@mui/material";
+import { Button, Stack, Input, FormHelperText } from "@mui/material";
 
 import FormControl from "@mui/material/FormControl";
 
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DoneIcon from "@mui/icons-material/Done";
+
+import { useController } from "react-hook-form";
 
 const QuestionChoice = ({
   choice,
@@ -19,7 +21,25 @@ const QuestionChoice = ({
   getValues,
   setValue,
   watch,
+  control,
 }) => {
+  const questionFieldName = `questions[${selectedQuestion}]`;
+  const { field: answerField } = useController({
+    name: `${questionFieldName}.answer`,
+    control,
+    defaultValue: "",
+  });
+  const { field: choiceIdField } = useController({
+    name: `${questionFieldName}.choices[${index}].id`,
+    control,
+    defaultValue: "",
+  });
+
+  const handleChoiceSelect = (selectedQuestion, index, choiceId) => {
+    answerField.onChange(choiceId);
+    choiceIdField.onChange(choiceId);
+  };
+
   return (
     <Stack
       sx={{
@@ -31,8 +51,12 @@ const QuestionChoice = ({
       {index + 1 < getValues(`questions.${selectedQuestion}.choices.length`) ? (
         <Button
           onClick={() => {
-            if (watch(`questions.${selectedQuestion}.answer`) === choice?.id) {
-              setValue(`questions.${selectedQuestion}.answer`, "");
+            if (
+              watch(`questions.${selectedQuestion}.answer`) ===
+              watch(`questions.${selectedQuestion}.choices.${index}.id`)
+            ) {
+              // setValue(`questions.${selectedQuestion}.answer`, "");
+              answerField.onChange("");
             }
             remove(index);
           }}
@@ -62,7 +86,7 @@ const QuestionChoice = ({
           {...register(
             `questions[${selectedQuestion}].choices[${index}].value`,
             {
-              required: "title is required",
+              required: "question choice is required",
             }
           )}
           variant="outlined"
@@ -76,25 +100,31 @@ const QuestionChoice = ({
       </FormControl>
       <Button
         onClick={() => {
-          setValue(`questions.${selectedQuestion}.answer`, choice?.id);
-          setValue(
-            `questions.${selectedQuestion}.choices.${index}.id`,
-            choice?.id
-          );
+          // setValue(`questions.${selectedQuestion}.answer`, choice?.id);
+          // setValue(
+          //   `questions.${selectedQuestion}.choices.${index}.id`,
+          //   choice?.id
+          // );
+          // trigger();
+
+          handleChoiceSelect(selectedQuestion, index, choice.id);
         }}
         sx={{
           width: "20px",
           background:
-            watch(`questions.${selectedQuestion}.answer`) === choice?.id
+            watch(`questions.${selectedQuestion}.answer`) ===
+            watch(`questions.${selectedQuestion}.choices.${index}.id`)
               ? "#078989"
               : "#f6f9fa",
           color:
-            watch(`questions.${selectedQuestion}.answer`) === choice?.id
+            watch(`questions.${selectedQuestion}.answer`) ===
+            watch(`questions.${selectedQuestion}.choices.${index}.id`)
               ? "white"
               : "black",
           "&:hover": {
             background:
-              watch(`questions.${selectedQuestion}.answer`) === choice?.id
+              watch(`questions.${selectedQuestion}.answer`) ===
+              watch(`questions.${selectedQuestion}.choices.${index}.id`)
                 ? "#078989"
                 : "#f6f9fa",
           },
