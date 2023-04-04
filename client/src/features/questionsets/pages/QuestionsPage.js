@@ -23,6 +23,7 @@ import {
 import { validateQuestion } from "../components/ValidateQuestion";
 import { useLocation } from "react-router-dom";
 
+
 const QuestionsPage = () => {
   const location = useLocation();
   const { state } = useLocation();
@@ -250,7 +251,9 @@ const QuestionsPage = () => {
                 setSelectedQuestion={setSelectedQuestion}
                 selectedQuestion={selectedQuestion}
                 errors={errors}
+                setValue={setValue}
               />
+              
             </Stack>
           </Box>
         </Stack>

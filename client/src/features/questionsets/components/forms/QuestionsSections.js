@@ -3,6 +3,8 @@ import { Box, Stack, Typography, Avatar, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import QuestionError from "../QuestionError";
 
+import QuestionExtractor from "../QuestionExtractor";
+
 const QuestionsSections = ({
   fields,
   append,
@@ -12,6 +14,7 @@ const QuestionsSections = ({
   errors,
   selectedQuestion,
   setSelectedQuestion,
+  setValue
 }) => {
   return (
     <Stack sx={{ padding: "20px", gap: "20px" }}>
@@ -117,6 +120,8 @@ const QuestionsSections = ({
         selectedQuestion={selectedQuestion}
         setSelectedQuestion={setSelectedQuestion}
       />
+
+      <QuestionExtractor setValue={setValue} />
     </Stack>
   );
 };

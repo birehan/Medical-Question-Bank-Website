@@ -21,11 +21,14 @@
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "docx": "^8.0.1",
+    "docxtemplater": "^3.36.1",
     "dotenv": "^16.0.3",
+    "esm": "^3.2.25",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "joi": "^17.8.3",
     "jsonwebtoken": "^8.5.1",
+    "jszip": "^3.10.1",
     "mammoth": "^1.5.1",
     "moment": "^2.29.4",
     "multer": "^1.4.5-lts.1",
@@ -34,7 +37,9 @@
     "passport": "^0.5.3",
     "passport-google-oauth20": "^2.0.0",
     "pdf-parse": "^1.1.1",
+    "pdf-to-text": "^0.0.7",
     "pdfjs-dist": "^3.4.120",
-    "sequelize": "^6.25.7"
+    "sequelize": "^6.25.7",
+    "word-extractor": "^1.0.4"
   }
 }

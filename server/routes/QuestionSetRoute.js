@@ -7,8 +7,8 @@ import {
   updateLike,
   deleteQuestionSet,
   updateQuestionSet,
-  extractQuestions,
 } from "../controllers/QuestionSets.js";
+import extractQuestions from "../controllers/QuestionExtractor.cjs";
 
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
 
@@ -18,11 +18,11 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const router = express.Router();
+router.post("/extractquestion", upload.single("file"), extractQuestions);
+
 router.get("/questions/", getAllQuestionSets);
 router.get("/courses/:courseId/questions", getCourseQuestionSets);
 router.get("/questions/:questionSetId", verifyUser, getQuestionSet);
-
-router.post("/extractquestion", upload.single("file"), extractQuestions);
 
 router.post("/questions", verifyUser, adminOnly, createQuestionSets);
 router.put(
@@ -40,6 +40,6 @@ router.delete(
   deleteQuestionSet
 );
 
-// router.put("/questions/:questionSetId/like", verifyUser, updateQuestionSet);
+router.put("/questions/:questionSetId/like", verifyUser, updateQuestionSet);
 
 export default router;
