@@ -78,7 +78,13 @@ const QuestionCard = ({
         </Typography>
 
         <FormControl>
-          <Stack sx={{ gap: "10px", width: { xs: "100%", md: "fit-content" } }}>
+          <Stack
+            sx={{
+              gap: "10px",
+              width: { xs: "100%", md: "94%" },
+              // border: "3px solid green",
+            }}
+          >
             {question?.choices
               ? JSON.parse(question?.choices).map((choice, index) => {
                   return (

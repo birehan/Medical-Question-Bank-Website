@@ -51,7 +51,7 @@ const useStyles = {
   headerLinks: {
     fontFamily: "Inter",
     fontWeight: 600,
-    fontSize: { xs: "20px", lg: "24px" },
+    fontSize: { xs: "20px", lg: "22px" },
 
     lineHeight: "29px",
     "&:hover": {

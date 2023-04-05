@@ -16,6 +16,11 @@ const RightMark = ({ showAnimation, setShowAnimation, isCorrect }) => {
       sx={{
         position: "absolute",
         right: { xs: "0px", md: "-35px" },
+        // margin: "auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
       }}
     >
       {showAnimation && isCorrect ? (

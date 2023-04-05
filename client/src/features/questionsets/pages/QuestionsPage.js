@@ -13,16 +13,9 @@ import {
   updateQuestions,
 } from "../actions/questions.js";
 import ToastAlert from "../../../components/ToastAlert";
-import {
-  Control,
-  useFieldArray,
-  useForm,
-  useWatch,
-  useController,
-} from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { validateQuestion } from "../components/ValidateQuestion";
 import { useLocation } from "react-router-dom";
-
 
 const QuestionsPage = () => {
   const location = useLocation();
@@ -99,9 +92,6 @@ const QuestionsPage = () => {
         hour: 0,
         minute: 0,
         second: 0,
-        // hour: JSON.parse(state?.questionSet?.duration)["hour"] || 0,
-        // minute: JSON.parse(state?.questionSet?.duration)["minute"] || 0,
-        // second: JSON.parse(state?.questionSet?.duration)["second"] || 0,
       },
     },
   });
@@ -253,7 +243,6 @@ const QuestionsPage = () => {
                 errors={errors}
                 setValue={setValue}
               />
-              
             </Stack>
           </Box>
         </Stack>

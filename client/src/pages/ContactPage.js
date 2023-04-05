@@ -20,12 +20,11 @@ const ContactPage = () => {
           //   flexDirection: { xs: "column-reverse", md: "row" },
           width: "100vw",
           height: { xs: "fit-content", md: "70vh" },
-          margin: "102px 0px 20px",
+          margin: "80px 0px 20px",
         }}
       >
         <Box
           sx={{
-            // border: "1px solid green",
             margin: { xs: "50px 20px 10px", md: "50px 20px 20px" },
           }}
         >
@@ -48,6 +47,7 @@ const ContactPage = () => {
             width: "100vw",
             height: { xs: "fit-content" },
             // border: "3px solid green",
+            margin: "auto",
           }}
         >
           <Stack
@@ -55,7 +55,7 @@ const ContactPage = () => {
               //   flex: 4,
               justifyContent: "center",
               alignItems: "center",
-              width: { xs: "95%", md: "50%", xl: "40%" },
+              width: { xs: "95%", md: "50%", xl: "50%" },
               margin: "auto",
             }}
           >
@@ -64,7 +64,7 @@ const ContactPage = () => {
 
           <Box
             sx={{
-              width: { xs: "100%", md: "50%", xl: "60%" },
+              width: { xs: "100%", md: "50%", xl: "50%" },
 
               display: { xs: "none", md: "flex" },
               justifyContent: "center",

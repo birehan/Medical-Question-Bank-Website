@@ -4,7 +4,7 @@ import Snackbar from "@mui/material/Snackbar";
 
 import MuiAlert from "@mui/material/Alert";
 
-const ToastAlert = ({ openToast, setOpenToast, message }) => {
+const ToastAlert = ({ openToast, setOpenToast, message, severity }) => {
   useEffect(() => {
     setTimeout(() => {
       if (openToast) {
@@ -23,7 +23,7 @@ const ToastAlert = ({ openToast, setOpenToast, message }) => {
   return (
     <div>
       <Snackbar
-        severity={"success"}
+        severity={severity === "failed" ? "failed" : "success"}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={openToast}
         // autoHideDuration={5000}

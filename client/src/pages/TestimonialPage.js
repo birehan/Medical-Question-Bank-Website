@@ -45,8 +45,9 @@ const TestimonialPage = () => {
       className="home-container"
       sx={{
         backgroundColor: "#f6f9fa !important",
-        minHeight: "100vh",
+        height: "100vh",
         position: "relative",
+        // marginBottom: "30px",
       }}
     >
       <Header />
@@ -54,7 +55,7 @@ const TestimonialPage = () => {
         sx={{
           borderColor: "#f6f9fa !important",
           backgroundColor: "#f6f9fa !important",
-          marginTop: "100px",
+          marginTop: "80px",
         }}
       >
         <Stack

@@ -197,7 +197,7 @@ const userReducer = (state = initialState, action) => {
         success: true,
         loading: false,
         failed: false,
-        message: "",
+        message: action.payload,
       };
 
     // Update employee conditions
@@ -205,6 +205,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         failed: true,
+        success: false,
         message: action.payload,
       };
 

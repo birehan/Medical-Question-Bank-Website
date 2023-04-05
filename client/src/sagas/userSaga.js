@@ -16,8 +16,8 @@ function* createUser({ payload }) {
 
 function* sendMessage({ payload }) {
   try {
-    const user = yield call(api.sendMessage, payload);
-    yield put({ type: types.SEND_MESSAGE_SUCCESS, payload: user });
+    const message = yield call(api.sendMessage, payload);
+    yield put({ type: types.SEND_MESSAGE_SUCCESS, payload: message });
   } catch (error) {
     yield put({
       type: types.SEND_MESSAGE_FAILED,
@@ -117,7 +117,6 @@ function* userSaga() {
   yield takeEvery(types.DELETE_USER, deleteUser);
 
   yield takeEvery(types.SEND_MESSAGE, sendMessage);
-
 }
 
 export default userSaga;

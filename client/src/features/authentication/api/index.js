@@ -66,10 +66,10 @@ export const createUser = async (user) => {
 };
 export const sendMessage = async (message) => {
   try {
-    const { data } = await axios.post(url + "sendmessage", message);
-    return data;
+    await axios.post(url + "sendmessage", message);
+    return "Message sent successfully";
   } catch (error) {
-    throw new Error(error?.response?.data?.message);
+    throw error?.response?.data?.message || "Message not sent!";
   }
 };
 

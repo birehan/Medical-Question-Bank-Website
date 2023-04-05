@@ -98,40 +98,52 @@ const QuestionChoice = ({
           }}
         />
       </FormControl>
-      <Button
-        onClick={() => {
-          // setValue(`questions.${selectedQuestion}.answer`, choice?.id);
-          // setValue(
-          //   `questions.${selectedQuestion}.choices.${index}.id`,
-          //   choice?.id
-          // );
-          // trigger();
-
-          handleChoiceSelect(selectedQuestion, index, choice.id);
-        }}
-        sx={{
-          width: "20px",
-          background:
-            watch(`questions.${selectedQuestion}.answer`) ===
-            watch(`questions.${selectedQuestion}.choices.${index}.id`)
-              ? "#078989"
-              : "#f6f9fa",
-          color:
-            watch(`questions.${selectedQuestion}.answer`) ===
-            watch(`questions.${selectedQuestion}.choices.${index}.id`)
-              ? "white"
-              : "black",
-          "&:hover": {
+      {getValues(`questions.${selectedQuestion}.choices.length`) > 1 &&
+      index + 1 == getValues(`questions.${selectedQuestion}.choices.length`) ? (
+        <Button
+          onClick={() => {
+            if (
+              watch(`questions.${selectedQuestion}.answer`) ===
+              watch(`questions.${selectedQuestion}.choices.${index}.id`)
+            ) {
+              // setValue(`questions.${selectedQuestion}.answer`, "");
+              answerField.onChange("");
+            }
+            remove(index);
+          }}
+          sx={{ width: "20px", background: "#f6f9fa", color: "black" }}
+        >
+          <RemoveIcon />
+        </Button>
+      ) : (
+        <Button
+          onClick={() => {
+            handleChoiceSelect(selectedQuestion, index, choice.id);
+          }}
+          sx={{
+            width: "20px",
             background:
               watch(`questions.${selectedQuestion}.answer`) ===
               watch(`questions.${selectedQuestion}.choices.${index}.id`)
                 ? "#078989"
                 : "#f6f9fa",
-          },
-        }}
-      >
-        <DoneIcon />
-      </Button>
+            color:
+              watch(`questions.${selectedQuestion}.answer`) ===
+              watch(`questions.${selectedQuestion}.choices.${index}.id`)
+                ? "white"
+                : "black",
+            "&:hover": {
+              background:
+                watch(`questions.${selectedQuestion}.answer`) ===
+                watch(`questions.${selectedQuestion}.choices.${index}.id`)
+                  ? "#078989"
+                  : "#f6f9fa",
+            },
+          }}
+        >
+          <DoneIcon />
+        </Button>
+      )}
     </Stack>
   );
 };

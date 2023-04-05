@@ -123,7 +123,9 @@ const QuestionForm = ({
                 //   sx={{ width: "100px" }}
                 placeholder="Explanation"
                 type="text"
-                {...register(`questions.${selectedQuestion}.explanation`, {})}
+                {...register(`questions.${selectedQuestion}.explanation`, {
+                  required: "explanation is required",
+                })}
                 variant="outlined"
                 id="outlined-basic description"
                 sx={{
@@ -133,6 +135,15 @@ const QuestionForm = ({
                   alignItems: "flex-start",
                 }}
               />
+              {errors.questions && errors.questions[selectedQuestion]
+                ? !!errors?.questions[selectedQuestion]?.explanation && (
+                    <FormHelperText error id="explanation-error">
+                      {errors?.questions[selectedQuestion]?.explanation &&
+                        errors?.questions[selectedQuestion]?.explanation
+                          .message}
+                    </FormHelperText>
+                  )
+                : ""}
             </FormControl>
           </Stack>
         </Stack>

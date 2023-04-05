@@ -29,8 +29,8 @@ const QuestionDetail = ({
   const [course, setCourse] = useState(null);
   const [unit, setUnit] = useState(null);
 
-  const { courses } = useSelector((state) => state.courses);
-  const { units } = useSelector((state) => state.courseDetail);
+  const { courses, units } = useSelector((state) => state.courses);
+  // const { units } = useSelector((state) => state.courseDetail);
 
   useEffect(() => {
     if (courses && courses?.length) {

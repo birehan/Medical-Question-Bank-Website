@@ -13,6 +13,7 @@ const useStyles = styled({
     height: { xs: "fit-content", md: "60vh" },
     margin: { xs: "80px auto 20px", lg: "80px auto 70px" },
     // border: "3px solid green",
+    gap: "20px",
   },
   homeTextContainer: {
     flex: 5,
@@ -31,9 +32,7 @@ const useStyles = styled({
     fontWeight: "700",
     fontSize: { xs: "32px", md: "34px", lg: "42px" },
     lineHeight: "160.9%",
-
     letterSpacing: "0.01em",
-
     color: "#00b5be",
   },
   detailText: {

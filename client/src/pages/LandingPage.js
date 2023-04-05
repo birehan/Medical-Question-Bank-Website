@@ -37,11 +37,19 @@ const LandingPage = () => {
               Medical Question Bank
             </Typography>
             <Typography sx={classes?.detailText}>
+              Where Practice is Perfected!
               {/* Are you ready to ace your medical exams? Our comprehensive
               question bank is here to help! sign up now and start practicing
               with confidence */}
-              Where Practice is Perfected
+              {/* Ready to excel in medical exams? Practice confidently with our
+              comprehensive question bank. Sign up now. */}
+              {/* Ace medical exams with our question bank. Sign up now. */}
+              <br />
+              Are you ready to ace your medical exams? Our comprehensive
+              question bank is here to help! sign up now and start practicing
+              with confidence
             </Typography>
+
             <Box sx={{ position: "relative", border: "1px solid gree" }}>
               <Button
                 title="Get Started"

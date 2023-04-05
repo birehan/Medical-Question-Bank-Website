@@ -27,5 +27,13 @@ export const validateQuestion = (question) => {
     });
   }
 
+  if (!question.explanation) {
+    errors.push({
+      field: "explanation",
+      type: "required",
+      message: "explanation is required",
+    });
+  }
+
   return errors.length ? errors : null;
 };
